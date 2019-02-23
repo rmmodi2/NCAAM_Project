@@ -1,0 +1,118 @@
+---
+title: "NCAAM Bradley Terry Analysis"
+output: html_notebook
+---
+```{r}
+library(dplyr)
+library("BradleyTerry2")
+```
+
+
+----- LOADING IN TEAM STATS DATA--------
+
+
+```{r}
+
+naTeamStats <- c('Rk','School','School Advanced','TRB%','eFG%','TOV%','FT/FGA','NULL','SchoolAdvanced','TS%','OpponentAdvanced')
+colClassesTeamStats <- c('NULL','character',rep('NULL',19),'numeric','NULL','NULL','NULL','numeric','numeric','NULL','numeric')
+teamStats1011 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_TeamStats_1011.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+teamStats1112 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_TeamStats_1112.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+teamStats1213 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_TeamStats_1213.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+teamStats1314 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_TeamStats_1314.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+teamStats1415 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_TeamStats_1415.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+teamStats1516 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_TeamStats_1516.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+teamStats1617 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_TeamStats_1617.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+teamStats1718 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_TeamStats_1718.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+oppTeamStats1011 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_OppTeamStats_1011.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+oppTeamStats1112 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_OppTeamStats_1112.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+oppTeamStats1213 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_OppTeamStats_1213.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+oppTeamStats1314 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_OppTeamStats_1314.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+oppTeamStats1415 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_OppTeamStats_1415.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+oppTeamStats1516 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_OppTeamStats_1516.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+oppTeamStats1617 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_OppTeamStats_1617.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+oppTeamStats1718 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TeamStats/NCAAM_OppTeamStats_1718.csv",header=TRUE,na.strings=naTeamStats,colClasses = colClassesTeamStats)
+teamStats1011
+oppTeamStats1011
+
+```
+
+Loading in the Massey Ordinals / TeamIds data
+```{r}
+masseyOrdinals <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/KaggleData/MasseyOrdinals.csv",header=TRUE)
+masseyOrdinals
+```
+
+
+```{r}
+teamIds <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/KaggleData/DataFiles/Teams.csv",header=TRUE)
+teamIds
+```
+
+--------create a winner | loser | freq for BTm input - Approach 1: Single Season----------
+```{r}
+naValuesAllGames = c("Date","Schl","Opp","Result","")
+colClassesAllGames = c("integer","character","character","NULL","character","character",rep("NULL",14))
+AllGames_1011 = read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/AllGames/NCAAM_AllGames_1011.csv",header=TRUE,colClasses=colClassesAllGames,na.strings=naValuesAllGames)
+AllGames_1011
+```
+```{r}
+allGames1011 <- filter(AllGames_1011,Date!="3/15/11",Date!="3/16/11",Date!="3/17/11",Date!="3/18/11",Date!="3/24/11",Date!="3/25/11",Date!="3/26/11",Date!="3/27/11",Date!="4/2/11",Date!='4/4/11',substring(AllGames_1011$Result,1,1)=='W',Opp %in% Schl)
+allGames1011 = data.frame(winner=allGames1011$Schl,loser=allGames1011$Opp,Freq=1)
+
+allGames1011
+```
+
+---------CALL BTM ON THE CREATED DATA FRAME----------
+
+```{r}
+ncaaModel = BTm(outcome=1,player1=allGames1011$winner,player2=allGames1011$loser)
+```
+
+```{r}
+summary(ncaaModel)
+```
+
+
+---- BRADLEY TERRY MODEL TESTING ACCURACY -----
+
+
+```{r}
+colClassesTGames = c(rep("NULL",2),"character","NULL","character","character",rep("NULL",14))
+tournamentGames_1011 = read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TournamentGames/NCAAM_TournamentGames_1011.csv",header=TRUE,colClasses=colClassesTGames,na.strings=naValuesAllGames)
+tournamentGames_1011 <- na.omit(tournamentGames_1011)
+```
+
+```{r}
+btmNewData = data.frame(player1=tournamentGames_1011$Schl,player2=tournamentGames_1011$Opp)
+res <- predict(object=ncaaModel,newdata=btmNewData,level=1,type="response")
+res
+```
+
+```{r}
+resultsframe = data.frame(modelRes=res,actualRes=tournamentGames_1011$Result)
+resultsframe$modelRes <- round(resultsframe$modelRes)
+convFunction <- function(letter){
+  if (substring(letter,1,1)=="W") {
+    return(1)
+  }
+  else{
+    return(0)
+  }
+}
+
+resultsframe$actualRes = sapply(resultsframe$actualRes,convFunction)
+accuracyhelp = resultsframe$modelRes - resultsframe$actualRes
+accuracy = sum(accuracyhelp == 0) / 134
+accuracy
+```
+
+------ BEGIN BRADLEY TERRY MODEL FOR APPROACH 2------
+
+
+
+----- FIRST WE NEED TO 
+
+```{r}
+
+```
+
