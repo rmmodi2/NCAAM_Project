@@ -40,20 +40,20 @@ skiprows_list_kenpom = []
 kenpom_na_values_list = list(kenpomDTypeDict.keys())
 
 kenpom_1011 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1011.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
-kenpom_1112 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1011.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
-kenpom_1213 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1011.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
-kenpom_1314 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1011.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
-kenpom_1415 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1011.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
-kenpom_1516 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1011.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
-kenpom_1617 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1011.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
-kenpom_1718 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1011.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
+kenpom_1112 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1112.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
+kenpom_1213 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1213.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
+kenpom_1314 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1314.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
+kenpom_1415 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1415.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
+kenpom_1516 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1516.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
+kenpom_1617 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1617.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
+kenpom_1718 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1718.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
 
 
-teamStatsUseCols = [0,1,3,4,8,9,16,17,21,25,26,28]
-teamStatsDTypeDict={'Rk':float,'School':str,'TotalW':float,'TotalL':float,'ConfW':float,'ConfL':float,'TRB%':float,'eFG%':float,'TOV%':float,'FT/FGA':float,'Pace':float,'ORtg':float}
+teamStatsUseCols = [0,1,3,4,6,8,9,16,17,21,25,26,28]
+teamStatsDTypeDict={'Rk':float,'School':str,'TotalW':float,'TotalL':float,'SRS':float, 'ConfW':float,'ConfL':float,'Pace':float,'ORtg':float,'TRB%':float,'eFG%':float,'TOV%':float,'FT/FGA':float,}
 # skiprows_list_teamStats = skiprows_list
 skiprows_list_teamStats = []
-teamStats_na_values_list = list(teamStatsDTypeDict.keys()) + ["School Advanced","Opponent Advanced",'Overall','Conf.','W','L']
+teamStats_na_values_list = list(teamStatsDTypeDict.keys()) + ["School Advanced","Opponent Advanced",'Overall','Conf.','W','L','SRS']
 
 teamStats_1011 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1011.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 teamStats_1112 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1112.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
@@ -117,12 +117,21 @@ def convertTeamNames(kenpom,kenpomflag):
                     # print("did we find uconn?")
                     kenpom.at[index,'Team'] = 'UConn'
                     continue
+                if (team[0] == 'Albany'):
+                    # print("did we find uconn?")
+                    kenpom.at[index,'Team'] = 'Albany (NY)'
+                    continue
                 if (team[0] == 'Pittsburgh'):
                     # print("did we find uconn?")
                     kenpom.at[index,'Team'] = 'Pitt'
                     continue
-                if (team[0] == 'North' and team[1] == 'Carolina'):
-                    kenpom.at[index,'Team'] = 'UNC'
+                if (team[0] == 'UC' and team[1] == 'Irvine'):
+                    # print("did we find uconn?")
+                    kenpom.at[index,'Team'] = 'UC-Irvine'
+                    continue
+                if (team[0] == 'UC' and team[1] == 'Davis'):
+                    # print("did we find uconn?")
+                    kenpom.at[index,'Team'] = 'UC-Davis'
                     continue
                 if (team[0] == 'LIU' and team[1] == 'Brooklyn'):
                     kenpom.at[index,'Team'] = 'LIU-Brooklyn'
@@ -132,6 +141,18 @@ def convertTeamNames(kenpom,kenpomflag):
                     continue
                 if (team[0] == 'Boston' and team[1] == "University"):
                     kenpom.at[index,'Team'] = "Boston U."
+                    continue
+                if (team[0] == 'Loyola' and team[1] == 'MD'):
+                    kenpom.at[index,'Team'] = "Loyola (MD)"
+                    continue
+                if (team[0] == 'Loyola' and team[1] == 'Chicago'):
+                    kenpom.at[index,'Team'] = "Loyola (IL)"
+                    continue
+                if (team[0] == 'Miami' and team[1] == "FL"):
+                    kenpom.at[index,'Team'] = "Miami (FL)"
+                    continue
+                if (team[0] == 'Louisiana' and team[1] == "Lafayette"):
+                    kenpom.at[index,'Team'] = "Louisiana"
                     continue
                 # print("old name is "+row['Team'])
                 if team[-1] in tournamentSeeds:
@@ -152,6 +173,12 @@ def convertTeamNames(kenpom,kenpomflag):
                 #then if there's a St. at the end of the string, change the St. to State
                 if row['School'] == 'Virginia Commonwealth':
                     kenpom.at[index,'School'] = 'VCU'
+                    continue
+                if row['School'] == 'Pennsylvania':
+                    kenpom.at[index,'School'] = 'Penn'
+                    continue
+                if row['School'] == 'Cal State Fullerton':
+                    kenpom.at[index,'School'] = 'Cal St. Fullerton'
                     continue
                 if (row['School'] == 'Long Island University'):
                     kenpom.at[index,'School'] = 'LIU-Brooklyn'
@@ -186,12 +213,41 @@ def convertTeamNames(kenpom,kenpomflag):
                 if (row['School'] == 'Southern California'):
                     kenpom.at[index,'School'] = 'USC'
                     continue
-                team = str.split(row['School'])
-                if (team[0] == 'North' and team[1] == 'Carolina'):
-                    kenpom.at[index,'School'] = 'UNC'
+                if (row['School'] == "Saint Mary's (CA)"):
+                    kenpom.at[index,'School'] = "Saint Mary's"
+                    continue
+                if (row['School'] == 'Southern Mississippi'):
+                    kenpom.at[index,'School'] = 'Southern Miss'
+                    continue
+                if (row['School'] == 'University of California'):
+                    kenpom.at[index,'School'] = 'California'
+                    continue
+                if (row['School'] == 'Detroit Mercy'):
+                    kenpom.at[index,'School'] = 'Detroit'
+                    continue
+                if (row['School'] == 'Louisiana State'):
+                    kenpom.at[index,'School'] = 'LSU'
+                    continue
+                if (row['School'] == 'Southern Methodist'):
+                    kenpom.at[index,'School'] = 'SMU'
+                    continue
+                if (row['School'] == 'North Carolina-Wilmington'):
+                    kenpom.at[index,'School'] = 'UNC Wilmington'
+                    continue
+                if (row['School'] == 'Cal State Bakersfield'):
+                    kenpom.at[index,'School'] = 'Cal St. Bakersfield'
+                    continue
+                if (row['School'] == 'Maryland-Baltimore County'):
+                    kenpom.at[index,'School'] = 'UMBC'
+                    continue
+                if (row['School'] == 'North Carolina-Greensboro'):
+                    kenpom.at[index,'School'] = 'UNC Greensboro'
+                    continue
+                if (row['School'] == 'Texas Christian'):
+                    kenpom.at[index,'School'] = 'TCU'
                     continue
 
-print(kenpom_1011.loc[kenpom_1011['Team']=='Connecticut 3'])
+# print(kenpom_1314.loc[kenpom_1314['Team']=='Louisiana Lafayette 14'])
 
 convertTeamNames(kenpom_1011,True)
 convertTeamNames(kenpom_1112,True)
@@ -218,10 +274,10 @@ convertTeamNames(oppTeamStats_1516,False)
 convertTeamNames(oppTeamStats_1617,False)
 convertTeamNames(oppTeamStats_1718,False)
 
-print(kenpom_1011.loc[kenpom_1011['Team']=='UConn'])
+# print(kenpom_1314.loc[kenpom_1314['Team']=='Louisiana'])
 # print(kenpom_1011)
 # print(kenpom_1011.loc[kenpom_1011['Team']=='Oakland'])
-print(teamStats_1011.loc[teamStats_1011['School']=='Notre Dame'])
+# print(teamStats_1011.loc[teamStats_1011['School']=='North Carolina State'])
 
 
 def createTeamStatistics(tournamentWinsAllYears):
@@ -242,19 +298,25 @@ def teamStats(statsFor,statsAgainst,kenpom,tournamentWins):
     teamStats = {}
     statsForRow = statsFor.loc[statsFor['School'] == "Kansas State"]
     for k in tournamentWins.keys():
-        print(k)
+        # print(k)
         statsForRow = statsFor.loc[statsFor['School'] == k]
         statsAgainstRow = statsAgainst.loc[statsAgainst['School'] == k]
         kenpomRow = kenpom.loc[kenpom['Team'] == k]
         statDict = {}
         statDict['ConfWinPct'] = statsForRow['ConfW'].array[0] / (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0])
-        statDict['NonConfWinPct'] = (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0])/((statsForRow['TotalL'].array[0]-statsForRow['ConfL'].array[0]) + (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]))
+        tourneywins = tournamentWins[k]
+        tourneylosses = 1
+        if tournamentWins[k] == 6:
+            tourneylosses = 0
+        statDict['OverallWinPct'] = (statsForRow['TotalW'].array[0] - tourneywins)/(statsForRow['TotalL'].array[0]-tourneylosses + statsForRow['TotalW'].array[0] - tourneywins)
+        statDict['NonConfWinPct'] = (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins)/((statsForRow['TotalL'].array[0]-statsForRow['ConfL'].array[0]-tourneylosses) + (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins))
         statDict['eFG%'] = statsForRow['eFG%'].array[0]
+        # print(statDict['eFG%'])
         statDict['eFG%Against'] = statsAgainstRow['eFG%'].array[0]
         statDict['netEFG%'] = statDict['eFG%'] - statDict['eFG%Against']
         statDict['TOV%'] = statsForRow['TOV%'].array[0]
         statDict['TOV%Against'] = statsAgainstRow['TOV%'].array[0]
-        statDict['netTOV%'] = statDict['TOV%'] - statDict['TOV%Against']
+        statDict['netTOV%'] = statDict['TOV%Against'] - statDict['TOV%']
         statDict['TRB%'] = statsForRow['TRB%'].array[0]
         statDict['TRB%Against'] = statsAgainstRow['TRB%'].array[0]
         statDict['netTRB%'] = statDict['TRB%'] - statDict['TRB%Against']
@@ -264,12 +326,11 @@ def teamStats(statsFor,statsAgainst,kenpom,tournamentWins):
         statDict['ORtg'] = statsForRow['ORtg'].array[0]
         statDict['DRtg'] = statsAgainstRow['ORtg'].array[0]
         statDict['netRtg'] = statDict['ORtg'] - statDict['DRtg']
-        statDict['ORtg'] = statsForRow['ORtg'].array[0]
-        statDict['DRtg'] = statsAgainstRow['ORtg'].array[0]
         statDict['netAdjRtg'] = kenpomRow['AdjEM'].array[0]
         statDict['AdjORtg'] = kenpomRow['AdjO'].array[0]
         statDict['AdjDRtg'] = kenpomRow['AdjD'].array[0]
         statDict['pace'] = statsForRow['Pace'].array[0]
+        statDict['SRS'] = statsForRow['SRS'].array[0]
         teamStats[k] = statDict
     return teamStats        
 
@@ -287,16 +348,28 @@ def createTournamentWinsAllYears():
     tournamentWinsAllYears["1718"],seenGames["1718"] = tournamentTeamWins(tournamentGames_1718)
     return tournamentWinsAllYears,createTournamentDateList(seenGames)
 
-def createRoadWinPctAllYears():
+def createRoadWinPctAllYears(tournamentDates):
     roadWinPctAllYears = {}
-    roadWinPctAllYears["1011"] = roadWinPct(allGames_1011)
-    roadWinPctAllYears["1112"] = roadWinPct(allGames_1112)
-    roadWinPctAllYears["1213"] = roadWinPct(allGames_1213)
-    roadWinPctAllYears["1314"] = roadWinPct(allGames_1314)
-    roadWinPctAllYears["1415"] = roadWinPct(allGames_1415)
-    roadWinPctAllYears["1516"] = roadWinPct(allGames_1516)
-    roadWinPctAllYears["1617"] = roadWinPct(allGames_1617)
-    roadWinPctAllYears["1718"] = roadWinPct(allGames_1718)
+    roadWinPctAllYears["1011"] = roadWinPct(allGames_1011,tournamentDates)
+    roadWinPctAllYears["1112"] = roadWinPct(allGames_1112,tournamentDates)
+    roadWinPctAllYears["1213"] = roadWinPct(allGames_1213,tournamentDates)
+    roadWinPctAllYears["1314"] = roadWinPct(allGames_1314,tournamentDates)
+    roadWinPctAllYears["1415"] = roadWinPct(allGames_1415,tournamentDates)
+    roadWinPctAllYears["1516"] = roadWinPct(allGames_1516,tournamentDates)
+    roadWinPctAllYears["1617"] = roadWinPct(allGames_1617,tournamentDates)
+    roadWinPctAllYears["1718"] = roadWinPct(allGames_1718,tournamentDates)
+    return roadWinPctAllYears
+
+def createTeamWinPctAllYears(tournamentDates):
+    roadWinPctAllYears = {}
+    roadWinPctAllYears["1011"] = teamWinPct(allGames_1011,tournamentDates)
+    roadWinPctAllYears["1112"] = teamWinPct(allGames_1112,tournamentDates)
+    roadWinPctAllYears["1213"] = teamWinPct(allGames_1213,tournamentDates)
+    roadWinPctAllYears["1314"] = teamWinPct(allGames_1314,tournamentDates)
+    roadWinPctAllYears["1415"] = teamWinPct(allGames_1415,tournamentDates)
+    roadWinPctAllYears["1516"] = teamWinPct(allGames_1516,tournamentDates)
+    roadWinPctAllYears["1617"] = teamWinPct(allGames_1617,tournamentDates)
+    roadWinPctAllYears["1718"] = teamWinPct(allGames_1718,tournamentDates)
     return roadWinPctAllYears
 
 #helper function to get every team's win total from a certain ncaa tournament
@@ -307,6 +380,11 @@ def tournamentTeamWins(tournamentGames):
         if (not pd.isnull(row['Id'])):
             #gather relevant info from game
             team = row['Schl']
+            result = row['Result'][0]
+            oppTeam = row['Opp']
+            #you have to comment this out if you are doing anything based on RECORD ##########
+            if (team == "UMass"):
+                team = "Massachusetts"
             if (team == 'Northern Colo.'):
                 # print("found northern colo")
                 team = 'Northern Colorado'
@@ -316,16 +394,121 @@ def tournamentTeamWins(tournamentGames):
                 team = "Western Kentucky"
             if (team == "New Mexico St."):
                 team = "New Mexico State"
-            result = row['Result'][0]
-            oppTeam = row['Opp']
+            if (team == "NC State"):
+                team = "North Carolina State"
+            if (team == "UNC"):
+                team = "North Carolina"
+            if (team == "Long Beach St."):
+                team = "Long Beach State"
+            if (team == "S Dakota St."):
+                team = "South Dakota State"
+            if (team == "Miss Val St"):
+                team = "Mississippi Valley State"
+            if (team == "Fla. Gulf Coast"):
+                team = "Florida Gulf Coast"
+            if (team == "N.C. A&T"):
+                team = "North Carolina A&T"
+            if (team == "NW St."):
+                team = "Northwestern State"
+            if (team == "Ole Miss"):
+                team = "Mississippi"
+            if (team == "Middle Tenn."):
+                team = "Middle Tennessee"
+            if (team == "Mt. St. Mary's"):
+                team = "Mount St. Mary's"
+            if (oppTeam == "Mt. St. Mary's"):
+                oppTeam = "Mount St. Mary's"
+            if (team == "Cal St Bakersfield"):
+                team = "Cal St. Bakersfield"
+            if (oppTeam == "Cal St Bakersfield"):
+                oppTeam = "Cal St. Bakersfield"
+            if (team == "Coastal Caro."):
+                team = "Coastal Carolina"
+            if (oppTeam == "Coastal Caro."):
+                oppTeam = "Coastal Carolina"
+            if (team == "Eastern Wash."):
+                team = "Eastern Washington"
+            if (oppTeam == "Eastern Wash."):
+                oppTeam = "Eastern Washington"
+            if (team == "Cal St Fullerton"):
+                team = "Cal St. Fullerton"
+            if (oppTeam == "Cal St Fullerton"):
+                oppTeam = "Cal St. Fullerton"
+            if (team == "Fairl. Dickinson"):
+                team = "Fairleigh Dickinson"
+            if (oppTeam == "Fairl. Dickinson"):
+                oppTeam = "Fairleigh Dickinson"
+            if (team == "ETSU"):
+                team = "East Tennessee State"
+            if (oppTeam == "ETSU"):
+                oppTeam = "East Tennessee State"
+            if (team == "Middle Tenn."):
+                team = "Middle Tennessee"
+            if (oppTeam == "Middle Tenn."):
+                oppTeam = "Middle Tennessee"
+            if (team == "Northern Ky."):
+                team = "Northern Kentucky"
+            if (oppTeam == "Northern Ky."):
+                oppTeam = "Northern Kentucky"
+            if (team == "N.C. Central"):
+                team = "North Carolina Central"
+            if (oppTeam == "Jacksonville St."):
+                oppTeam = "Jacksonville State"
+            if (team == "Jacksonville St."):
+                team = "Jacksonville State"
+            if (team == "Western Mich."):
+                team = "Western Michigan"
+            if (oppTeam == "Western Mich."):
+                oppTeam = "Western Michigan"
+            if (team == "St. Joseph's"):
+                team = "Saint Joseph's"
+            if (team == "North Dakota St."):
+                team = "North Dakota State"
+            if (team == "Eastern Ky."):
+                team = "Eastern Kentucky"
             if (oppTeam == 'Northern Colo.'):
                 oppTeam = "Northern Colorado"
+            if (team == "Charleston"):
+                team = "College of Charleston"
+            if (oppTeam == 'Charleston'):
+                oppTeam = "College of Charleston"
             if (oppTeam == "St. Peter's"):
                 oppTeam = "Saint Peter's"
             if (oppTeam == "Western Ky."):
                 oppTeam = "Western Kentucky"
             if (oppTeam == "New Mexico St."):
                 oppTeam = "New Mexico State"
+            if (oppTeam == "NC State"):
+                oppTeam = "North Carolina State"
+            if (oppTeam == "UNC"):
+                oppTeam = "North Carolina"
+            if (oppTeam == "Long Beach St."):
+                oppTeam = "Long Beach State"
+            if (oppTeam == "S Dakota St."):
+                oppTeam = "South Dakota State"
+            if (oppTeam == "Miss Val St"):
+                oppTeam = "Mississippi Valley State"
+            if (oppTeam == "Fla. Gulf Coast"):
+                oppTeam = "Florida Gulf Coast"
+            if (oppTeam == "N.C. A&T"):
+                oppTeam = "North Carolina A&T"
+            if (oppTeam == "NW St."):
+                oppTeam = "Northwestern State"  
+            if (oppTeam == "Ole Miss"):
+                oppTeam = "Mississippi"  
+            if (oppTeam == "Middle Tenn."):
+                oppTeam = "Middle Tennessee"
+            if (oppTeam == "N.C. Central"):
+                oppTeam = "North Carolina Central"
+            if (oppTeam == "St. Joseph's"):
+                oppTeam = "Saint Joseph's"
+            if (oppTeam == "UMass"):
+                oppTeam = "Massachusetts"
+            if (oppTeam == "North Dakota St."):
+                oppTeam = "North Dakota State"
+            if (oppTeam == "Eastern Ky."):
+                oppTeam = "Eastern Kentucky"
+
             date = row['Date']
             #check if this game has been scanned already - important to check for tuple of (oppTeam,team) since that is the other copy of this game
             if (oppTeam,team) in seenGames_1011 and (seenGames_1011[(oppTeam,team)] == date):
@@ -388,7 +571,7 @@ def roadWinPct(allGames):
     return team_roadWinPct
 
 #helper function to convert roadWinPct dict and tournamentWins dict into X and Y NP Arrays
-def createXYArrays(roadWinPctDict,tournamentWinsDict):
+def createXYArraysRecord(roadWinPctDict,tournamentWinsDict):
     x = []
     y = []
     for year in tournamentWinsDict.keys():
@@ -396,6 +579,22 @@ def createXYArrays(roadWinPctDict,tournamentWinsDict):
             if (team in roadWinPctDict[year].keys()):
                 x.append(roadWinPctDict[year][team])
                 y.append(tournamentWinsDict[year][team])
+    return x,y
+
+def createXYArraysStats(teamStatistics,tournamentWinsDict,stat):
+    x = {}
+    y = {}
+    for year in tournamentWinsDict.keys():
+        for team in tournamentWinsDict[year].keys():
+            if (team in teamStatistics[year].keys()):
+                x[team+year]=(teamStatistics[year][team][stat])
+                # print(tournamentWinsDict[year][team])
+                y[team+year]=(tournamentWinsDict[year][team])
+                if x[team+year] == 1 and y[team+year] == 0:
+                    print(team+year)
+
+            else:
+                print(team+" wasn't in both the tournament wins dict and the stats dict")
     return x,y
 
 #helper function to get every team's overall winning % for a given season
@@ -409,6 +608,7 @@ def teamWinPct(allGames,tournamentGameDates):
             result = row['Result'][0]
             oppTeam = row['Opp']
             date = row['Date']
+            print(date)
             location = row['Location']
             if (date not in tournamentGameDates):
                 if result == 'W':
@@ -425,7 +625,8 @@ def teamWinPct(allGames,tournamentGameDates):
                         team_roadWinPct[team] = after
                     else:
                         team_roadWinPct[team] = (0,1)
-            
+            else:
+                print("the date was an ncaa tournament game!")
     for k in team_roadWinPct.keys():
         roadwins = team_roadWinPct[k][0]
         roadgames = team_roadWinPct[k][1]
@@ -493,6 +694,9 @@ def neutralWinPct(allGames,tournamentGameDates):
                         team_roadWinPct[team] = after
                     else:
                         team_roadWinPct[team] = (0,1)
+            else:
+                if (location == 'N'): 
+                    print("the date was an ncaa tournament game!")
     for k in team_roadWinPct.keys():
         roadwins = team_roadWinPct[k][0]
         roadgames = team_roadWinPct[k][1]
