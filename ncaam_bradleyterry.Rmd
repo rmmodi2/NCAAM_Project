@@ -52,15 +52,27 @@ teamIds
 ```{r}
 naValuesAllGames = c("Date","Schl","Opp","Result","")
 colClassesAllGames = c("integer","character","character","NULL","character","character",rep("NULL",14))
-AllGames_1011 = read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/AllGames/NCAAM_AllGames_1011.csv",header=TRUE,colClasses=colClassesAllGames,na.strings=naValuesAllGames)
-AllGames_1011
+AllGames_1112 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/AllGames/NCAAM_AllGames_1112.csv",header=TRUE,colClasses=colClassesAllGames,na.strings=naValuesAllGames)
 ```
-```{r}
-allGames1011 <- filter(AllGames_1011,Date!="3/15/11",Date!="3/16/11",Date!="3/17/11",Date!="3/18/11",Date!="3/24/11",Date!="3/25/11",Date!="3/26/11",Date!="3/27/11",Date!="4/2/11",Date!='4/4/11',substring(AllGames_1011$Result,1,1)=='W',Opp %in% Schl)
-allGames1011 = data.frame(winner=allGames1011$Schl,loser=allGames1011$Opp,Freq=1)
 
-allGames1011
+```{r}
+colClassesTGames = c(rep("NULL",1),"character","character","NULL","character","character",rep("NULL",14))
+tournamentGames_1112 <- read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TournamentGames/NCAAM_TournamentGames_1112.csv",header=TRUE,colClasses=colClassesTGames,na.strings=naValuesAllGames)
+tournamentGames_1112 <- na.omit(tournamentGames_1112)
+tournamentGames_1112
 ```
+
+
+```{r}
+allGames1112 <- filter(AllGames_1112,substring(AllGames_1112$Result,1,1)=='W',Opp%in%Schl)
+allGames1112 = data.frame(winner=allGames1112$Schl,loser=allGames1112$Opp,Freq=1)
+
+allGames1112
+```
+
+
+
+
 
 ---------CALL BTM ON THE CREATED DATA FRAME----------
 
@@ -77,9 +89,7 @@ summary(ncaaModel)
 
 
 ```{r}
-colClassesTGames = c(rep("NULL",2),"character","NULL","character","character",rep("NULL",14))
-tournamentGames_1011 = read.csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/TournamentGames/NCAAM_TournamentGames_1011.csv",header=TRUE,colClasses=colClassesTGames,na.strings=naValuesAllGames)
-tournamentGames_1011 <- na.omit(tournamentGames_1011)
+
 ```
 
 ```{r}

@@ -279,34 +279,58 @@ convertTeamNames(oppTeamStats_1718,False)
 # print(kenpom_1011.loc[kenpom_1011['Team']=='Oakland'])
 # print(teamStats_1011.loc[teamStats_1011['School']=='North Carolina State'])
 
+teams = pd.read_csv("Data/KaggleData/Teams.csv",header=0)
+
+masseyOrdinals = pd.read_csv("Data/KaggleData/MasseyOrdinals.csv",header=0)
+masseyOrdinals = masseyOrdinals[masseyOrdinals['SystemName']=='POM']
+masseyOrdinals = masseyOrdinals[masseyOrdinals['RankingDayNum']==133]
+
+masseyOrdinals_1011 = masseyOrdinals[masseyOrdinals['Season']==2011]
+masseyOrdinals_1112 = masseyOrdinals[masseyOrdinals['Season']==2012]
+masseyOrdinals_1213 = masseyOrdinals[masseyOrdinals['Season']==2013]
+masseyOrdinals_1314 = masseyOrdinals[masseyOrdinals['Season']==2014]
+masseyOrdinals_1415 = masseyOrdinals[masseyOrdinals['Season']==2015]
+masseyOrdinals_1516 = masseyOrdinals[masseyOrdinals['Season']==2016]
+masseyOrdinals_1617 = masseyOrdinals[masseyOrdinals['Season']==2017]
+masseyOrdinals_1718 = masseyOrdinals[masseyOrdinals['Season']==2018]
 
 def createTeamStatistics(tournamentWinsAllYears):
     teamStatistics = {}
-    teamStatistics["1011"] = teamStats(teamStats_1011,oppTeamStats_1011,kenpom_1011,tournamentWinsAllYears["1011"])
-    teamStatistics["1112"] = teamStats(teamStats_1112,oppTeamStats_1112,kenpom_1112,tournamentWinsAllYears["1112"])
-    teamStatistics["1213"] = teamStats(teamStats_1213,oppTeamStats_1213,kenpom_1213,tournamentWinsAllYears["1213"])
-    teamStatistics["1314"] = teamStats(teamStats_1314,oppTeamStats_1314,kenpom_1314,tournamentWinsAllYears["1314"])
-    teamStatistics["1415"] = teamStats(teamStats_1415,oppTeamStats_1415,kenpom_1415,tournamentWinsAllYears["1415"])
-    teamStatistics["1516"] = teamStats(teamStats_1516,oppTeamStats_1516,kenpom_1516,tournamentWinsAllYears["1516"])
-    teamStatistics["1617"] = teamStats(teamStats_1617,oppTeamStats_1617,kenpom_1617,tournamentWinsAllYears["1617"])
-    teamStatistics["1718"] = teamStats(teamStats_1718,oppTeamStats_1718,kenpom_1718,tournamentWinsAllYears["1718"])
+    teamStatistics["1011"] = teamStats(teamStats_1011,oppTeamStats_1011,kenpom_1011,masseyOrdinals_1011,tournamentWinsAllYears["1011"],teams)
+    teamStatistics["1112"] = teamStats(teamStats_1112,oppTeamStats_1112,kenpom_1112,masseyOrdinals_1112,tournamentWinsAllYears["1112"],teams)
+    teamStatistics["1213"] = teamStats(teamStats_1213,oppTeamStats_1213,kenpom_1213,masseyOrdinals_1213,tournamentWinsAllYears["1213"],teams)
+    teamStatistics["1314"] = teamStats(teamStats_1314,oppTeamStats_1314,kenpom_1314,masseyOrdinals_1314,tournamentWinsAllYears["1314"],teams)
+    teamStatistics["1415"] = teamStats(teamStats_1415,oppTeamStats_1415,kenpom_1415,masseyOrdinals_1415,tournamentWinsAllYears["1415"],teams)
+    teamStatistics["1516"] = teamStats(teamStats_1516,oppTeamStats_1516,kenpom_1516,masseyOrdinals_1516,tournamentWinsAllYears["1516"],teams)
+    teamStatistics["1617"] = teamStats(teamStats_1617,oppTeamStats_1617,kenpom_1617,masseyOrdinals_1617,tournamentWinsAllYears["1617"],teams)
+    teamStatistics["1718"] = teamStats(teamStats_1718,oppTeamStats_1718,kenpom_1718,masseyOrdinals_1718,tournamentWinsAllYears["1718"],teams)
     return teamStatistics
 
 #####TO DO######
 #helper function to generate needed teamStats for a given year
-def teamStats(statsFor,statsAgainst,kenpom,tournamentWins):
+def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
     teamStats = {}
-    statsForRow = statsFor.loc[statsFor['School'] == "Kansas State"]
-    for k in tournamentWins.keys():
-        # print(k)
+    statsFor = statsFor.dropna()
+    list_of_teams = statsFor['School']
+    # print(list_of_teams)
+    for k in list_of_teams:
+        print(k)
         statsForRow = statsFor.loc[statsFor['School'] == k]
         statsAgainstRow = statsAgainst.loc[statsAgainst['School'] == k]
         kenpomRow = kenpom.loc[kenpom['Team'] == k]
+        teamId = teams.loc[teams['TeamName']==k]['TeamID'].array[0]
+        masseyRk = massey.loc[massey['TeamID']==teamId]['OrdinalRank'].array[0]
         statDict = {}
+        statDict['kenpomRk'] = masseyRk
         statDict['ConfWinPct'] = statsForRow['ConfW'].array[0] / (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0])
-        tourneywins = tournamentWins[k]
-        tourneylosses = 1
-        if tournamentWins[k] == 6:
+        if k in tournamentWins.keys():
+            tourneywins = tournamentWins[k]
+            if tourneywins == 6:
+                tourneylosses = 0
+            else:
+                tourneylosses = 1
+        else:
+            tourneywins = 0
             tourneylosses = 0
         statDict['OverallWinPct'] = (statsForRow['TotalW'].array[0] - tourneywins)/(statsForRow['TotalL'].array[0]-tourneylosses + statsForRow['TotalW'].array[0] - tourneywins)
         statDict['NonConfWinPct'] = (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins)/((statsForRow['TotalL'].array[0]-statsForRow['ConfL'].array[0]-tourneylosses) + (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins))
@@ -326,11 +350,7 @@ def teamStats(statsFor,statsAgainst,kenpom,tournamentWins):
         statDict['ORtg'] = statsForRow['ORtg'].array[0]
         statDict['DRtg'] = statsAgainstRow['ORtg'].array[0]
         statDict['netRtg'] = statDict['ORtg'] - statDict['DRtg']
-        statDict['netAdjRtg'] = kenpomRow['AdjEM'].array[0]
-        statDict['AdjORtg'] = kenpomRow['AdjO'].array[0]
-        statDict['AdjDRtg'] = kenpomRow['AdjD'].array[0]
         statDict['pace'] = statsForRow['Pace'].array[0]
-        statDict['SRS'] = statsForRow['SRS'].array[0]
         teamStats[k] = statDict
     return teamStats        
 

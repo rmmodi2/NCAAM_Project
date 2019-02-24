@@ -27,7 +27,7 @@ teamStatistics = helper.createTeamStatistics(tournamentWinsAllYears)
 
 # print(teamStatistics["1718"]["Villanova"]["OverallWinPct"])
 
-stat = 'SRS'
+stat = 'kenpomRk'
 
 #todo: convert into a X NP Array -> roadWinPct and a Y NP Array -> tournamentTeamWins
 statdict,tournamentWins = helper.createXYArraysStats(teamStatistics,tournamentWinsAllYears,stat)
