@@ -13,7 +13,10 @@ na_values_list = ["School","Id","Date","Schl","Location","Opp","Result","MP","FG
 #todo: read_csv into a seperate data frame for each year
 
 # allGames_1011_1718 = pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Data/Data/NCAAM_AllGames_1011_1718.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
-# tournamentGames_1011_1718 = pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Data/Data/NCAAM_TournamentGames_1011_1718.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
+tournamentGames_1011_1718 = pd.read_csv("Data/NCAAM_TournamentGames_1011_1718.csv", header=0,na_values=na_values_list)
+
+tournamentGames_1011_1718 = tournamentGames_1011_1718.dropna()
+# print(tournamentGames_1011_1718)
 
 allGames_1011 = pd.read_csv("Data/AllGames/NCAAM_AllGames_1011.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
 allGames_1112 = pd.read_csv("Data/AllGames/NCAAM_AllGames_1112.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
@@ -286,6 +289,7 @@ masseyOrdinals = pd.read_csv("Data/KaggleData/MasseyOrdinals.csv",header=0)
 masseyOrdinals = masseyOrdinals[masseyOrdinals['SystemName']=='POM']
 masseyOrdinals = masseyOrdinals[masseyOrdinals['RankingDayNum']==133]
 
+masseyOrdinals_0910 = masseyOrdinals[masseyOrdinals['Season']==2010]
 masseyOrdinals_1011 = masseyOrdinals[masseyOrdinals['Season']==2011]
 masseyOrdinals_1112 = masseyOrdinals[masseyOrdinals['Season']==2012]
 masseyOrdinals_1213 = masseyOrdinals[masseyOrdinals['Season']==2013]
@@ -736,3 +740,6 @@ def createTournamentDateList(seenGames):
 
 def tournamentWinsAllYears(year):
     return teamRecord.tournamentWinsAllYears(year)
+
+def createXYLogisticRegression(teamStatsByYear):
+

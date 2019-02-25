@@ -5,6 +5,7 @@ import numpy as np
 import ncaam_helperfunctions as helper
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import normalize
+import random
 
 
 tournamentWinsAllYears,tournament_dates = helper.createTournamentWinsAllYears()
@@ -89,6 +90,8 @@ normalizeByConference(teamStatistics["1516"],teams,conferences,2016)
 normalizeByConference(teamStatistics["1617"],teams,conferences,2017)
 normalizeByConference(teamStatistics["1718"],teams,conferences,2018)
 # print(teamStatistics["1011"]["Long Beach State"])
+
+x,y,validationSet = helper.createXYLogisticRegression(teamStatistics)
 
 
 
