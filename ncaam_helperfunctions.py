@@ -326,15 +326,15 @@ masseyOrdinals_1718 = masseyOrdinals[masseyOrdinals['Season']==2018]
 
 def createTeamStatistics(tournamentWinsAllYears):
     teamStatistics = {}
-    teamStatistics["0910"] = teamStats(teamStats_0910,oppTeamStats_0910,kenpom_1011,masseyOrdinals_0910,tournamentWinsAllYears["0910"],teams)
-    teamStatistics["1011"] = teamStats(teamStats_1011,oppTeamStats_1011,kenpom_1011,masseyOrdinals_1011,tournamentWinsAllYears["1011"],teams)
-    teamStatistics["1112"] = teamStats(teamStats_1112,oppTeamStats_1112,kenpom_1112,masseyOrdinals_1112,tournamentWinsAllYears["1112"],teams)
-    teamStatistics["1213"] = teamStats(teamStats_1213,oppTeamStats_1213,kenpom_1213,masseyOrdinals_1213,tournamentWinsAllYears["1213"],teams)
-    teamStatistics["1314"] = teamStats(teamStats_1314,oppTeamStats_1314,kenpom_1314,masseyOrdinals_1314,tournamentWinsAllYears["1314"],teams)
-    teamStatistics["1415"] = teamStats(teamStats_1415,oppTeamStats_1415,kenpom_1415,masseyOrdinals_1415,tournamentWinsAllYears["1415"],teams)
-    teamStatistics["1516"] = teamStats(teamStats_1516,oppTeamStats_1516,kenpom_1516,masseyOrdinals_1516,tournamentWinsAllYears["1516"],teams)
-    teamStatistics["1617"] = teamStats(teamStats_1617,oppTeamStats_1617,kenpom_1617,masseyOrdinals_1617,tournamentWinsAllYears["1617"],teams)
-    teamStatistics["1718"] = teamStats(teamStats_1718,oppTeamStats_1718,kenpom_1718,masseyOrdinals_1718,tournamentWinsAllYears["1718"],teams)
+    teamStatistics[2010] = teamStats(teamStats_0910,oppTeamStats_0910,kenpom_1011,masseyOrdinals_0910,tournamentWinsAllYears["0910"],teams)
+    teamStatistics[2011] = teamStats(teamStats_1011,oppTeamStats_1011,kenpom_1011,masseyOrdinals_1011,tournamentWinsAllYears["1011"],teams)
+    teamStatistics[2012] = teamStats(teamStats_1112,oppTeamStats_1112,kenpom_1112,masseyOrdinals_1112,tournamentWinsAllYears["1112"],teams)
+    teamStatistics[2013] = teamStats(teamStats_1213,oppTeamStats_1213,kenpom_1213,masseyOrdinals_1213,tournamentWinsAllYears["1213"],teams)
+    teamStatistics[2014] = teamStats(teamStats_1314,oppTeamStats_1314,kenpom_1314,masseyOrdinals_1314,tournamentWinsAllYears["1314"],teams)
+    teamStatistics[2015] = teamStats(teamStats_1415,oppTeamStats_1415,kenpom_1415,masseyOrdinals_1415,tournamentWinsAllYears["1415"],teams)
+    teamStatistics[2016] = teamStats(teamStats_1516,oppTeamStats_1516,kenpom_1516,masseyOrdinals_1516,tournamentWinsAllYears["1516"],teams)
+    teamStatistics[2017] = teamStats(teamStats_1617,oppTeamStats_1617,kenpom_1617,masseyOrdinals_1617,tournamentWinsAllYears["1617"],teams)
+    teamStatistics[2018] = teamStats(teamStats_1718,oppTeamStats_1718,kenpom_1718,masseyOrdinals_1718,tournamentWinsAllYears["1718"],teams)
     return teamStatistics
 
 #####TO DO######
@@ -628,118 +628,40 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
     #goal for y array = [1]
     y = []
     x = []
+    i = 1
+    def helperCreateLogRegXY(winningTeam,losingTeam,year,i):
+        x_entry = []
+        wNonConfWinPct = teamStatsByYear[year][winningTeam]['NonConfWinPct']
+        wNetEFG = teamStatsByYear[year][winningTeam]['netEFG%']
+        wKenpomRk = teamStatsByYear[year][winningTeam]['kenpomRk']
+        wNetTRB = teamStatsByYear[year][winningTeam]['netTRB%']
+        wNetTOV = teamStatsByYear[year][winningTeam]['netTOV%']
+        # x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+        lNonConfWinPct = teamStatsByYear[year][losingTeam]['NonConfWinPct']
+        lNetEFG = teamStatsByYear[year][losingTeam]['netEFG%']
+        lKenpomRk = teamStatsByYear[year][losingTeam]['kenpomRk']
+        lNetTRB = teamStatsByYear[year][losingTeam]['netTRB%']
+        lNetTOV = teamStatsByYear[year][losingTeam]['netTOV%']
+        # x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk]) 
+        # x.append(x_entry)
+        # y.append(1)
+        if i % 2 == 0:
+            t1=np.asarray([wNonConfWinPct,wNetEFG,wKenpomRk,wNetTRB,wNetTOV])
+            t2=np.asarray([lNonConfWinPct,lNetEFG,lKenpomRk,lNetTRB,lNetTOV]) 
+            return np.subtract(t1,t2),1
+        else:
+            t1=np.asarray([lNonConfWinPct,lNetEFG,lKenpomRk,lNetTRB,lNetTOV])
+            t2=np.asarray([wNonConfWinPct,wNetEFG,wKenpomRk,lNetTRB,lNetTOV])
+            return np.subtract(t1,t2),0
+    
     for index,row in trainingGames.iterrows():
         WTeamID = row['WTeamID']
         LTeamID = row['LTeamID']
         year = row['Season']
         winningTeam = teams.loc[teams['TeamID']==WTeamID]['TeamName'].array[0]
         losingTeam = teams.loc[teams['TeamID']==LTeamID]['TeamName'].array[0]
-        if (year == 2010):
-            x_entry = []
-            wNonConfWinPct = teamStatsByYear['0910'][winningTeam]['NonConfWinPct']
-            wNetEFG = teamStatsByYear['0910'][winningTeam]['netEFG%']
-            wKenpomRk = teamStatsByYear['0910'][winningTeam]['kenpomRk']
-            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
-            lNonConfWinPct = teamStatsByYear['0910'][losingTeam]['NonConfWinPct']
-            lNetEFG = teamStatsByYear['0910'][losingTeam]['netEFG%']
-            lKenpomRk = teamStatsByYear['0910'][losingTeam]['kenpomRk']
-            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
-            x.append(x_entry)
-            y.append(1)
-        if (year == 2011):
-            x_entry = []
-            wNonConfWinPct = teamStatsByYear['1011'][winningTeam]['NonConfWinPct']
-            wNetEFG = teamStatsByYear['1011'][winningTeam]['netEFG%']
-            wKenpomRk = teamStatsByYear['1011'][winningTeam]['kenpomRk']
-            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
-            lNonConfWinPct = teamStatsByYear['1011'][losingTeam]['NonConfWinPct']
-            lNetEFG = teamStatsByYear['1011'][losingTeam]['netEFG%']
-            lKenpomRk = teamStatsByYear['1011'][losingTeam]['kenpomRk']
-            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
-            x.append(x_entry)
-            y.append(1)
-        if (year == 2012):
-            x_entry = []
-            wNonConfWinPct = teamStatsByYear['1112'][winningTeam]['NonConfWinPct']
-            wNetEFG = teamStatsByYear['1112'][winningTeam]['netEFG%']
-            wKenpomRk = teamStatsByYear['1112'][winningTeam]['kenpomRk']
-            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
-            lNonConfWinPct = teamStatsByYear['1112'][losingTeam]['NonConfWinPct']
-            lNetEFG = teamStatsByYear['1112'][losingTeam]['netEFG%']
-            lKenpomRk = teamStatsByYear['1112'][losingTeam]['kenpomRk']
-            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
-            x.append(x_entry)
-            y.append(1)
-        if (year == 2013):
-            x_entry = []
-            wNonConfWinPct = teamStatsByYear['1213'][winningTeam]['NonConfWinPct']
-            wNetEFG = teamStatsByYear['1213'][winningTeam]['netEFG%']
-            wKenpomRk = teamStatsByYear['1213'][winningTeam]['kenpomRk']
-            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
-            lNonConfWinPct = teamStatsByYear['1213'][losingTeam]['NonConfWinPct']
-            lNetEFG = teamStatsByYear['1213'][losingTeam]['netEFG%']
-            lKenpomRk = teamStatsByYear['1213'][losingTeam]['kenpomRk']
-            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
-            x.append(x_entry)
-            y.append(1)
-        if (year == 2014):
-            x_entry = []
-            wNonConfWinPct = teamStatsByYear['1314'][winningTeam]['NonConfWinPct']
-            wNetEFG = teamStatsByYear['1314'][winningTeam]['netEFG%']
-            wKenpomRk = teamStatsByYear['1314'][winningTeam]['kenpomRk']
-            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
-            lNonConfWinPct = teamStatsByYear['1314'][losingTeam]['NonConfWinPct']
-            lNetEFG = teamStatsByYear['1314'][losingTeam]['netEFG%']
-            lKenpomRk = teamStatsByYear['1314'][losingTeam]['kenpomRk']
-            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
-            x.append(x_entry)
-            y.append(1)
-        if (year == 2015):
-            x_entry = []
-            wNonConfWinPct = teamStatsByYear['1415'][winningTeam]['NonConfWinPct']
-            wNetEFG = teamStatsByYear['1415'][winningTeam]['netEFG%']
-            wKenpomRk = teamStatsByYear['1415'][winningTeam]['kenpomRk']
-            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
-            lNonConfWinPct = teamStatsByYear['1415'][losingTeam]['NonConfWinPct']
-            lNetEFG = teamStatsByYear['1415'][losingTeam]['netEFG%']
-            lKenpomRk = teamStatsByYear['1415'][losingTeam]['kenpomRk']
-            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
-            x.append(x_entry)
-            y.append(1)
-        if (year == 2016):
-            x_entry = []
-            wNonConfWinPct = teamStatsByYear['1516'][winningTeam]['NonConfWinPct']
-            wNetEFG = teamStatsByYear['1516'][winningTeam]['netEFG%']
-            wKenpomRk = teamStatsByYear['1516'][winningTeam]['kenpomRk']
-            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
-            lNonConfWinPct = teamStatsByYear['1516'][losingTeam]['NonConfWinPct']
-            lNetEFG = teamStatsByYear['1516'][losingTeam]['netEFG%']
-            lKenpomRk = teamStatsByYear['1516'][losingTeam]['kenpomRk']
-            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
-            x.append(x_entry)
-            y.append(1)
-        if (year == 2017):
-            x_entry = []
-            wNonConfWinPct = teamStatsByYear['1617'][winningTeam]['NonConfWinPct']
-            wNetEFG = teamStatsByYear['1617'][winningTeam]['netEFG%']
-            wKenpomRk = teamStatsByYear['1617'][winningTeam]['kenpomRk']
-            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
-            lNonConfWinPct = teamStatsByYear['1617'][losingTeam]['NonConfWinPct']
-            lNetEFG = teamStatsByYear['1617'][losingTeam]['netEFG%']
-            lKenpomRk = teamStatsByYear['1617'][losingTeam]['kenpomRk']
-            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
-            x.append(x_entry)
-            y.append(1)
-        if (year == 2018):
-            x_entry = []
-            wNonConfWinPct = teamStatsByYear['1718'][winningTeam]['NonConfWinPct']
-            wNetEFG = teamStatsByYear['1718'][winningTeam]['netEFG%']
-            wKenpomRk = teamStatsByYear['1718'][winningTeam]['kenpomRk']
-            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
-            lNonConfWinPct = teamStatsByYear['1718'][losingTeam]['NonConfWinPct']
-            lNetEFG = teamStatsByYear['1718'][losingTeam]['netEFG%']
-            lKenpomRk = teamStatsByYear['1718'][losingTeam]['kenpomRk']
-            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
-            x.append(x_entry)
-            y.append(1)
+        xtoapp,ytoapp = helperCreateLogRegXY(winningTeam,losingTeam,year,i)
+        x.append(xtoapp)
+        y.append(ytoapp)
+        i=i+1
     return x,y
