@@ -31,7 +31,12 @@ allGames_1718 = pd.read_csv("Data/AllGames/NCAAM_AllGames_1718.csv", names=dtype
 
 tournamentGames = pd.read_csv("Data/KaggleData/DataFiles/NCAATourneyCompactResults.csv",header=0)
 # print(tournamentGames)
+tournamentGames = tournamentGames.loc[tournamentGames['Season']>=2010]
 
+def getTournamentGames():
+    return tournamentGames
+
+tournamentGames_0910 = tournamentGames.loc[tournamentGames['Season']==2010]
 tournamentGames_1011 = tournamentGames.loc[tournamentGames['Season']==2011]
 tournamentGames_1112 = tournamentGames.loc[tournamentGames['Season']==2012]
 tournamentGames_1213 = tournamentGames.loc[tournamentGames['Season']==2013]
@@ -427,163 +432,18 @@ def tournamentTeamWins(tournamentGames):
     team_tournamentWins_1011 = {}
     seenGames_1011 = {}
     for index, row in tournamentGames.iterrows():
-        if (not pd.isnull(row['Id'])):
-            #gather relevant info from game
-            team = row['Schl']
-            result = row['Result'][0]
-            oppTeam = row['Opp']
-            #you have to comment this out if you are doing anything based on RECORD ##########
-            if (team == "UMass"):
-                team = "Massachusetts"
-            if (team == 'Northern Colo.'):
-                # print("found northern colo")
-                team = 'Northern Colorado'
-            if (team == "St. Peter's"):
-                team = "Saint Peter's"
-            if (team == "Western Ky."):
-                team = "Western Kentucky"
-            if (team == "New Mexico St."):
-                team = "New Mexico State"
-            if (team == "NC State"):
-                team = "North Carolina State"
-            if (team == "UNC"):
-                team = "North Carolina"
-            if (team == "Long Beach St."):
-                team = "Long Beach State"
-            if (team == "S Dakota St."):
-                team = "South Dakota State"
-            if (team == "Miss Val St"):
-                team = "Mississippi Valley State"
-            if (team == "Fla. Gulf Coast"):
-                team = "Florida Gulf Coast"
-            if (team == "N.C. A&T"):
-                team = "North Carolina A&T"
-            if (team == "NW St."):
-                team = "Northwestern State"
-            if (team == "Ole Miss"):
-                team = "Mississippi"
-            if (team == "Middle Tenn."):
-                team = "Middle Tennessee"
-            if (team == "Mt. St. Mary's"):
-                team = "Mount St. Mary's"
-            if (oppTeam == "Mt. St. Mary's"):
-                oppTeam = "Mount St. Mary's"
-            if (team == "Cal St Bakersfield"):
-                team = "Cal St. Bakersfield"
-            if (oppTeam == "Cal St Bakersfield"):
-                oppTeam = "Cal St. Bakersfield"
-            if (team == "Coastal Caro."):
-                team = "Coastal Carolina"
-            if (oppTeam == "Coastal Caro."):
-                oppTeam = "Coastal Carolina"
-            if (team == "Eastern Wash."):
-                team = "Eastern Washington"
-            if (oppTeam == "Eastern Wash."):
-                oppTeam = "Eastern Washington"
-            if (team == "Cal St Fullerton"):
-                team = "Cal St. Fullerton"
-            if (oppTeam == "Cal St Fullerton"):
-                oppTeam = "Cal St. Fullerton"
-            if (team == "Fairl. Dickinson"):
-                team = "Fairleigh Dickinson"
-            if (oppTeam == "Fairl. Dickinson"):
-                oppTeam = "Fairleigh Dickinson"
-            if (team == "ETSU"):
-                team = "East Tennessee State"
-            if (oppTeam == "ETSU"):
-                oppTeam = "East Tennessee State"
-            if (team == "Middle Tenn."):
-                team = "Middle Tennessee"
-            if (oppTeam == "Middle Tenn."):
-                oppTeam = "Middle Tennessee"
-            if (team == "Northern Ky."):
-                team = "Northern Kentucky"
-            if (oppTeam == "Northern Ky."):
-                oppTeam = "Northern Kentucky"
-            if (team == "N.C. Central"):
-                team = "North Carolina Central"
-            if (oppTeam == "Jacksonville St."):
-                oppTeam = "Jacksonville State"
-            if (team == "Jacksonville St."):
-                team = "Jacksonville State"
-            if (team == "Western Mich."):
-                team = "Western Michigan"
-            if (oppTeam == "Western Mich."):
-                oppTeam = "Western Michigan"
-            if (team == "St. Joseph's"):
-                team = "Saint Joseph's"
-            if (team == "North Dakota St."):
-                team = "North Dakota State"
-            if (team == "Eastern Ky."):
-                team = "Eastern Kentucky"
-            if (oppTeam == 'Northern Colo.'):
-                oppTeam = "Northern Colorado"
-            if (team == "Charleston"):
-                team = "College of Charleston"
-            if (oppTeam == 'Charleston'):
-                oppTeam = "College of Charleston"
-            if (oppTeam == "St. Peter's"):
-                oppTeam = "Saint Peter's"
-            if (oppTeam == "Western Ky."):
-                oppTeam = "Western Kentucky"
-            if (oppTeam == "New Mexico St."):
-                oppTeam = "New Mexico State"
-            if (oppTeam == "NC State"):
-                oppTeam = "North Carolina State"
-            if (oppTeam == "UNC"):
-                oppTeam = "North Carolina"
-            if (oppTeam == "Long Beach St."):
-                oppTeam = "Long Beach State"
-            if (oppTeam == "S Dakota St."):
-                oppTeam = "South Dakota State"
-            if (oppTeam == "Miss Val St"):
-                oppTeam = "Mississippi Valley State"
-            if (oppTeam == "Fla. Gulf Coast"):
-                oppTeam = "Florida Gulf Coast"
-            if (oppTeam == "N.C. A&T"):
-                oppTeam = "North Carolina A&T"
-            if (oppTeam == "NW St."):
-                oppTeam = "Northwestern State"  
-            if (oppTeam == "Ole Miss"):
-                oppTeam = "Mississippi"  
-            if (oppTeam == "Middle Tenn."):
-                oppTeam = "Middle Tennessee"
-            if (oppTeam == "N.C. Central"):
-                oppTeam = "North Carolina Central"
-            if (oppTeam == "St. Joseph's"):
-                oppTeam = "Saint Joseph's"
-            if (oppTeam == "UMass"):
-                oppTeam = "Massachusetts"
-            if (oppTeam == "North Dakota St."):
-                oppTeam = "North Dakota State"
-            if (oppTeam == "Eastern Ky."):
-                oppTeam = "Eastern Kentucky"
-
-            date = row['Date']
-            #check if this game has been scanned already - important to check for tuple of (oppTeam,team) since that is the other copy of this game
-            if (oppTeam,team) in seenGames_1011 and (seenGames_1011[(oppTeam,team)] == date):
-                continue
-            #game hasn't been seen before, add it to seenGames
-            seenGames_1011[(team,oppTeam)] = date
-            #add result to our tournamentWins dict
-            if result == 'W':
-                if (team in team_tournamentWins_1011.keys()):
-                    team_tournamentWins_1011[team]+=1
-                else:
-                    team_tournamentWins_1011[team] = 1
-                if (oppTeam in team_tournamentWins_1011.keys()):
-                    team_tournamentWins_1011[oppTeam]+=0
-                else:
-                    team_tournamentWins_1011[oppTeam] = 0
-            if result == 'L':
-                if (oppTeam in team_tournamentWins_1011.keys()):
-                    team_tournamentWins_1011[oppTeam]+=1
-                else:
-                    team_tournamentWins_1011[oppTeam] = 1
-                if (team in team_tournamentWins_1011.keys()):
-                    team_tournamentWins_1011[team]+=0
-                else:
-                    team_tournamentWins_1011[team] = 0
+        winningTeamID = row['WTeamID']
+        losingTeamID = row['LTeamID']
+        winningTeam = teams.loc[teams['TeamID']==winningTeamID]['TeamName'].array[0]
+        losingTeam = teams.loc[teams['TeamID']==losingTeamID]['TeamName'].array[0]
+        if (winningTeam in team_tournamentWins_1011.keys()):
+            team_tournamentWins_1011[winningTeam]+=1
+        else:
+            team_tournamentWins_1011[winningTeam] = 1
+        if (losingTeam in team_tournamentWins_1011.keys()):
+            team_tournamentWins_1011[losingTeam]+=0
+        else:
+            team_tournamentWins_1011[losingTeam] = 0
     return (team_tournamentWins_1011,seenGames_1011)
 
 #helper function to get every team's road winning % for a given season
@@ -763,5 +623,123 @@ def createTournamentDateList(seenGames):
 def tournamentWinsAllYears(year):
     return teamRecord.tournamentWinsAllYears(year)
 
-# def createXYLogisticRegression(teamStatsByYear):
-
+def createXYLogisticRegression(teamStatsByYear,trainingGames):
+    #goal for x array [[wteamstats],[lteamstats]]
+    #goal for y array = [1]
+    y = []
+    x = []
+    for index,row in trainingGames.iterrows():
+        WTeamID = row['WTeamID']
+        LTeamID = row['LTeamID']
+        year = row['Season']
+        winningTeam = teams.loc[teams['TeamID']==WTeamID]['TeamName'].array[0]
+        losingTeam = teams.loc[teams['TeamID']==LTeamID]['TeamName'].array[0]
+        if (year == 2010):
+            x_entry = []
+            wNonConfWinPct = teamStatsByYear['0910'][winningTeam]['NonConfWinPct']
+            wNetEFG = teamStatsByYear['0910'][winningTeam]['netEFG%']
+            wKenpomRk = teamStatsByYear['0910'][winningTeam]['kenpomRk']
+            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+            lNonConfWinPct = teamStatsByYear['0910'][losingTeam]['NonConfWinPct']
+            lNetEFG = teamStatsByYear['0910'][losingTeam]['netEFG%']
+            lKenpomRk = teamStatsByYear['0910'][losingTeam]['kenpomRk']
+            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
+            x.append(x_entry)
+            y.append(1)
+        if (year == 2011):
+            x_entry = []
+            wNonConfWinPct = teamStatsByYear['1011'][winningTeam]['NonConfWinPct']
+            wNetEFG = teamStatsByYear['1011'][winningTeam]['netEFG%']
+            wKenpomRk = teamStatsByYear['1011'][winningTeam]['kenpomRk']
+            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+            lNonConfWinPct = teamStatsByYear['1011'][losingTeam]['NonConfWinPct']
+            lNetEFG = teamStatsByYear['1011'][losingTeam]['netEFG%']
+            lKenpomRk = teamStatsByYear['1011'][losingTeam]['kenpomRk']
+            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
+            x.append(x_entry)
+            y.append(1)
+        if (year == 2012):
+            x_entry = []
+            wNonConfWinPct = teamStatsByYear['1112'][winningTeam]['NonConfWinPct']
+            wNetEFG = teamStatsByYear['1112'][winningTeam]['netEFG%']
+            wKenpomRk = teamStatsByYear['1112'][winningTeam]['kenpomRk']
+            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+            lNonConfWinPct = teamStatsByYear['1112'][losingTeam]['NonConfWinPct']
+            lNetEFG = teamStatsByYear['1112'][losingTeam]['netEFG%']
+            lKenpomRk = teamStatsByYear['1112'][losingTeam]['kenpomRk']
+            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
+            x.append(x_entry)
+            y.append(1)
+        if (year == 2013):
+            x_entry = []
+            wNonConfWinPct = teamStatsByYear['1213'][winningTeam]['NonConfWinPct']
+            wNetEFG = teamStatsByYear['1213'][winningTeam]['netEFG%']
+            wKenpomRk = teamStatsByYear['1213'][winningTeam]['kenpomRk']
+            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+            lNonConfWinPct = teamStatsByYear['1213'][losingTeam]['NonConfWinPct']
+            lNetEFG = teamStatsByYear['1213'][losingTeam]['netEFG%']
+            lKenpomRk = teamStatsByYear['1213'][losingTeam]['kenpomRk']
+            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
+            x.append(x_entry)
+            y.append(1)
+        if (year == 2014):
+            x_entry = []
+            wNonConfWinPct = teamStatsByYear['1314'][winningTeam]['NonConfWinPct']
+            wNetEFG = teamStatsByYear['1314'][winningTeam]['netEFG%']
+            wKenpomRk = teamStatsByYear['1314'][winningTeam]['kenpomRk']
+            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+            lNonConfWinPct = teamStatsByYear['1314'][losingTeam]['NonConfWinPct']
+            lNetEFG = teamStatsByYear['1314'][losingTeam]['netEFG%']
+            lKenpomRk = teamStatsByYear['1314'][losingTeam]['kenpomRk']
+            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
+            x.append(x_entry)
+            y.append(1)
+        if (year == 2015):
+            x_entry = []
+            wNonConfWinPct = teamStatsByYear['1415'][winningTeam]['NonConfWinPct']
+            wNetEFG = teamStatsByYear['1415'][winningTeam]['netEFG%']
+            wKenpomRk = teamStatsByYear['1415'][winningTeam]['kenpomRk']
+            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+            lNonConfWinPct = teamStatsByYear['1415'][losingTeam]['NonConfWinPct']
+            lNetEFG = teamStatsByYear['1415'][losingTeam]['netEFG%']
+            lKenpomRk = teamStatsByYear['1415'][losingTeam]['kenpomRk']
+            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
+            x.append(x_entry)
+            y.append(1)
+        if (year == 2016):
+            x_entry = []
+            wNonConfWinPct = teamStatsByYear['1516'][winningTeam]['NonConfWinPct']
+            wNetEFG = teamStatsByYear['1516'][winningTeam]['netEFG%']
+            wKenpomRk = teamStatsByYear['1516'][winningTeam]['kenpomRk']
+            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+            lNonConfWinPct = teamStatsByYear['1516'][losingTeam]['NonConfWinPct']
+            lNetEFG = teamStatsByYear['1516'][losingTeam]['netEFG%']
+            lKenpomRk = teamStatsByYear['1516'][losingTeam]['kenpomRk']
+            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
+            x.append(x_entry)
+            y.append(1)
+        if (year == 2017):
+            x_entry = []
+            wNonConfWinPct = teamStatsByYear['1617'][winningTeam]['NonConfWinPct']
+            wNetEFG = teamStatsByYear['1617'][winningTeam]['netEFG%']
+            wKenpomRk = teamStatsByYear['1617'][winningTeam]['kenpomRk']
+            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+            lNonConfWinPct = teamStatsByYear['1617'][losingTeam]['NonConfWinPct']
+            lNetEFG = teamStatsByYear['1617'][losingTeam]['netEFG%']
+            lKenpomRk = teamStatsByYear['1617'][losingTeam]['kenpomRk']
+            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
+            x.append(x_entry)
+            y.append(1)
+        if (year == 2018):
+            x_entry = []
+            wNonConfWinPct = teamStatsByYear['1718'][winningTeam]['NonConfWinPct']
+            wNetEFG = teamStatsByYear['1718'][winningTeam]['netEFG%']
+            wKenpomRk = teamStatsByYear['1718'][winningTeam]['kenpomRk']
+            x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
+            lNonConfWinPct = teamStatsByYear['1718'][losingTeam]['NonConfWinPct']
+            lNetEFG = teamStatsByYear['1718'][losingTeam]['netEFG%']
+            lKenpomRk = teamStatsByYear['1718'][losingTeam]['kenpomRk']
+            x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk])
+            x.append(x_entry)
+            y.append(1)
+    return x,y

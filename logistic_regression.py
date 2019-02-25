@@ -5,6 +5,7 @@ import numpy as np
 import ncaam_helperfunctions as helper
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import normalize
+from sklearn.model_selection import train_test_split
 import random
 
 
@@ -34,6 +35,7 @@ def normalizeByYear(teamStatisticsYear):
         teamStatisticsYear[k]['kenpomRk'] = (teamStatisticsYear[k]['kenpomRk']-meanKenpom)/sdevKenpom
 
 print("now we are normalizing by year")
+normalizeByYear(teamStatistics["0910"])
 normalizeByYear(teamStatistics["1011"])
 normalizeByYear(teamStatistics["1112"])
 normalizeByYear(teamStatistics["1213"])
@@ -81,6 +83,7 @@ def normalizeByConference(teamStatisticsYear,teams,conferences,year):
             teamStatisticsYear[k]['kenpomRk'] = (teamStatisticsYear[k]['kenpomRk'] - conferenceToStats[team_conference]['kenpomRk'][0]) / conferenceToStats[team_conference]['kenpomRk'][1]
 
 print("now we are normalizing by conference")
+normalizeByConference(teamStatistics['0910'],teams,conferences,2010)
 normalizeByConference(teamStatistics["1011"],teams,conferences,2011)
 normalizeByConference(teamStatistics["1112"],teams,conferences,2012)
 normalizeByConference(teamStatistics["1213"],teams,conferences,2013)
@@ -89,9 +92,31 @@ normalizeByConference(teamStatistics["1415"],teams,conferences,2015)
 normalizeByConference(teamStatistics["1516"],teams,conferences,2016)
 normalizeByConference(teamStatistics["1617"],teams,conferences,2017)
 normalizeByConference(teamStatistics["1718"],teams,conferences,2018)
-# print(teamStatistics["1011"]["Long Beach State"])
+# print(teamStatistics["1011"]["Notre Dame"])
 
-x,y,validationSet = helper.createXYLogisticRegression(teamStatistics)
+tournamentGamesData = helper.getTournamentGames()
+print(len(tournamentGamesData))
+
+# testingGamesData = tournamentGamesData.loc[tournamentGamesData['Season']==2018]
+# tournamentGamesData = tournamentGamesData.loc[tournamentGamesData['Season']!=2018]
+# print(len(testingGamesData))
+# print(len(tournamentGamesData))
+
+
+# print("printing the testing games data")
+# print(testingGamesData)
+
+train, validation = train_test_split(tournamentGamesData, test_size=0.2)
+print(len(train))
+# print("printing the training games data")
+# print(train)
+
+# print("printing the validation data")
+# print(validation)
+
+x,y = helper.createXYLogisticRegression(teamStatistics,train)
+print(len(x))
+print(len(y))
 
 
 
