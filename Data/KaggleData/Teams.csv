@@ -1,5 +1,5 @@
 TeamID,TeamName,FirstD1Season,LastD1Season
-1101,Abilene Chr,2014,2019
+1101,Abilene Christian,2014,2019
 1102,Air Force,1985,2019
 1103,Akron,1985,2019
 1104,Alabama,1985,2019
@@ -13,7 +13,7 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1112,Arizona,1985,2019
 1113,Arizona State,1985,2019
 1114,Little Rock,1985,2019
-1115,Ark Pine Bluff,1999,2019
+1115,Arkansas-Pine Bluff,1999,2019
 1116,Arkansas,1985,2019
 1117,Arkansas State,1985,2019
 1118,Armstrong State,1987,1987
@@ -30,7 +30,7 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1129,Boise State,1985,2019
 1130,Boston College,1985,2019
 1131,Boston U.,1985,2019
-1132,Bowling Green,1985,2019
+1132,Bowling Green State,1985,2019
 1133,Bradley,1985,2019
 1134,Brooklyn,1985,1992
 1135,Brown,1985,2019
@@ -39,14 +39,14 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1138,Buffalo,1992,2019
 1139,Butler,1985,2019
 1140,BYU,1985,2019
-1141,C Michigan,1985,2019
+1141,Central Michigan,1985,2019
 1142,Cal Poly,1995,2019
 1143,California,1985,2019
 1144,Campbell,1985,2019
 1145,Canisius,1985,2019
-1146,Cent Arkansas,2007,2019
-1147,Centenary,1985,2011
-1148,Central Conn,1987,2019
+1146,Central Arkansas,2007,2019
+1147,Centenary (LA),1985,2011
+1148,Central Connecticut State,1987,2019
 1149,Charleston Southern,1985,2019
 1150,Charlotte,1985,2019
 1151,Chattanooga,1985,2019
@@ -67,8 +67,8 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1166,Creighton,1985,2019
 1167,Cal St. Bakersfield,2008,2019
 1168,Cal St. Fullerton,1985,2019
-1169,Cal St. Northridge,1991,2019
-1170,Cal St. Sacramento,1992,2019
+1169,Cal State Northridge,1991,2019
+1170,Sacramento State,1992,2019
 1171,Dartmouth,1985,2019
 1172,Davidson,1985,2019
 1173,Dayton,1985,2019
@@ -81,12 +81,12 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1180,Drexel,1985,2019
 1181,Duke,1985,2019
 1182,Duquesne,1985,2019
-1183,E Illinois,1985,2019
+1183,Eastern Illinois,1985,2019
 1184,Eastern Kentucky,1985,2019
-1185,E Michigan,1985,2019
+1185,Eastern Michigan,1985,2019
 1186,Eastern Washington,1985,2019
 1187,East Carolina,1985,2019
-1188,Edwardsville,2009,2019
+1188,SIU Edwardsville,2009,2019
 1189,Elon,2000,2019
 1190,East Tennessee State,1985,2019
 1191,Evansville,1985,2019
@@ -102,8 +102,8 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1201,Fresno State,1985,2019
 1202,Furman,1985,2019
 1203,George Washington,1985,2019
-1204,Ga Southern,1985,2019
-1205,Gardner Webb,2003,2019
+1204,Georgia Southern,1985,2019
+1205,Gardner-Webb,2003,2019
 1206,George Mason,1985,2019
 1207,Georgetown,1985,2019
 1208,Georgia,1985,2019
@@ -121,11 +121,11 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1220,Hofstra,1985,2019
 1221,Holy Cross,1985,2019
 1222,Houston,1985,2019
-1223,Houston Bap,1985,2019
+1223,Houston Baptist,1985,2019
 1224,Howard,1985,2019
 1225,Idaho,1985,2019
 1226,Idaho State,1985,2019
-1227,IL Chicago,1985,2019
+1227,Illinois-Chicago,1985,2019
 1228,Illinois,1985,2019
 1229,Illinois State,1985,2019
 1230,Incarnate Word,2014,2019
@@ -134,15 +134,16 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1233,Iona,1985,2019
 1234,Iowa,1985,2019
 1235,Iowa State,1985,2019
-1236,IPFW,2003,2019
+1236,Purdue-Fort Wayne,2003,2019
+1236,Fort Wayne,2003,2019
 1237,IUPUI,1999,2019
-1238,Jackson St,1985,2019
+1238,Jackson State,1985,2019
 1239,Jacksonville,1985,2019
 1240,Jacksonville State,1996,2019
 1241,James Madison,1985,2019
 1242,Kansas,1985,2019
 1243,Kansas State,1985,2019
-1244,Kennesaw,2006,2019
+1244,Kennesaw State,2006,2019
 1245,Kent State,1985,2019
 1246,Kentucky,1985,2019
 1247,La Salle,1985,2019
@@ -156,11 +157,11 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1255,Longwood,2005,2019
 1256,Louisiana Tech,1985,2019
 1257,Louisville,1985,2019
-1258,Loy Marymount,1985,2019
+1258,Loyola Marymount,1985,2019
 1259,Loyola (MD),1985,2019
 1260,Loyola (IL),1985,2019
 1261,LSU,1985,2019
-1262,MA Lowell,2014,2019
+1262,Massachusetts-Lowell,2014,2019
 1263,Maine,1985,2019
 1264,Manhattan,1985,2019
 1265,Marist,1985,2019
@@ -168,8 +169,8 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1267,Marshall,1985,2019
 1268,Maryland,1985,2019
 1269,Massachusetts,1985,2019
-1270,McNeese St,1985,2019
-1271,MD E Shore,1985,2019
+1270,McNeese State,1985,2019
+1271,Maryland-Eastern Shore,1985,2019
 1272,Memphis,1985,2019
 1273,Mercer,1985,2019
 1274,Miami (FL),1986,2019
@@ -178,13 +179,13 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1277,Michigan State,1985,2019
 1278,Minnesota,1985,2019
 1279,Mississippi,1985,2019
-1280,Mississippi St,1985,2019
+1280,Mississippi State,1985,2019
 1281,Missouri,1985,2019
-1282,Missouri KC,1990,2019
-1283,Missouri St,1985,2019
-1284,Monmouth NJ,1985,2019
+1282,Missouri-Kansas City,1990,2019
+1283,Missouri State,1985,2019
+1284,Monmouth,1985,2019
 1285,Montana,1985,2019
-1286,Montana St,1985,2019
+1286,Montana State,1985,2019
 1287,Morehead State,1985,2019
 1288,Morgan State,1985,2019
 1289,Morris Brown,2002,2003
@@ -201,7 +202,7 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1300,North Carolina Central,2008,2019
 1301,North Carolina State,1985,2019
 1302,NE Illinois,1991,1998
-1303,NE Omaha,2012,2019
+1303,Omaha,2012,2019
 1304,Nebraska,1985,2019
 1305,Nevada,1985,2019
 1306,New Hampshire,1985,2019
@@ -252,22 +253,22 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1351,Rider,1985,2019
 1352,Robert Morris,1985,2019
 1353,Rutgers,1985,2019
-1354,South Carolina St.,1985,2019
+1354,South Carolina State,1985,2019
 1355,South Dakota State,2006,2019
-1356,S Illinois,1985,2019
+1356,Southern Illinois,1985,2019
 1357,Sacred Heart,2000,2019
-1358,Sam Houston St,1987,2019
+1358,Sam Houston State,1987,2019
 1359,Samford,1985,2019
 1360,San Diego,1985,2019
 1361,San Diego State,1985,2019
 1362,San Francisco,1986,2019
-1363,San Jose St,1985,2019
+1363,San Jose State,1985,2019
 1364,UCSB,1985,2019
 1365,Santa Clara,1985,2019
-1366,Savannah St,2003,2019
-1367,SC Upstate,2008,2019
-1368,SE Louisiana,1985,2019
-1369,SE Missouri St,1992,2019
+1366,Savannah State,2003,2019
+1367,South Carolina Upstate,2008,2019
+1368,Southeastern Louisiana,1985,2019
+1369,Southeast Missouri State,1992,2019
 1370,Seattle,2009,2019
 1371,Seton Hall,1985,2019
 1372,Stephen F. Austin,1987,2019
@@ -281,8 +282,8 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1380,Southern,1985,2019
 1381,Southern Utah,1989,2019
 1382,St. Bonaventure,1985,2019
-1383,St Francis NY,1985,2019
-1384,St Francis PA,1985,2019
+1383,St. Francis (NY),1985,2019
+1384,Saint Francis (PA),1985,2019
 1385,St. John's (NY),1985,2019
 1386,Saint Joseph's,1985,2019
 1387,Saint Louis,1985,2019
@@ -292,23 +293,23 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1391,Stetson,1985,2019
 1392,Stony Brook,2000,2019
 1393,Syracuse,1985,2019
-1394,TAM C. Christi,2003,2019
+1394,Texas A&M-Corpus Christi,2003,2019
 1395,TCU,1985,2019
 1396,Temple,1985,2019
 1397,Tennessee,1985,2019
-1398,Tennessee St,1985,2019
+1398,Tennessee State,1985,2019
 1399,Tennessee Tech,1985,2019
 1400,Texas,1985,2019
 1401,Texas A&M,1985,2019
-1402,Texas St,1985,2019
+1402,Texas State,1985,2019
 1403,Texas Tech,1985,2019
-1404,TN Martin,1993,2019
+1404,Tennessee-Martin,1993,2019
 1405,Toledo,1985,2019
 1406,Towson,1985,2019
 1407,Troy,1994,2019
 1408,Tulane,1985,2019
 1409,Tulsa,1985,2019
-1410,UTRGV,1985,2019
+1410,Texas-Rio Grande Valley,1985,2019
 1411,Texas Southern,1985,2019
 1412,UAB,1985,2019
 1413,UC-Davis,2005,2019
@@ -317,19 +318,19 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1416,Central Florida,1985,2019
 1417,UCLA,1985,2019
 1418,Louisiana,1985,2019
-1419,ULM,1985,2019
+1419,Louisiana-Monroe,1985,2019
 1420,UMBC,1987,2019
 1421,UNC Asheville,1987,2019
 1422,UNC Greensboro,1992,2019
 1423,UNC Wilmington,1985,2019
 1424,UNLV,1985,2019
 1425,USC,1985,2019
-1426,UT Arlington,1985,2019
+1426,Texas-Arlington,1985,2019
 1427,UTSA,1985,2019
 1428,Utah,1985,2019
 1429,Utah State,1985,2019
 1430,Utah Valley,2005,2019
-1431,UTEP,1985,2019
+1431,Texas-El Paso,1985,2019
 1432,Utica,1985,1987
 1433,VCU,1985,2019
 1434,Valparaiso,1985,2019
@@ -340,15 +341,15 @@ TeamID,TeamName,FirstD1Season,LastD1Season
 1439,Virginia Tech,1985,2019
 1440,VMI,1985,2019
 1441,Western Carolina,1985,2019
-1442,W Illinois,1985,2019
+1442,Western Illinois,1985,2019
 1443,Western Kentucky,1985,2019
 1444,Western Michigan,1985,2019
-1445,W Salem St,2007,2010
-1446,W Texas A&M,1985,1986
+1445,Western Salem State,2007,2010
+1446,West Texas A&M,1985,1986
 1447,Wagner,1985,2019
 1448,Wake Forest,1985,2019
 1449,Washington,1985,2019
-1450,Washington St,1985,2019
+1450,Washington State,1985,2019
 1451,Weber State,1985,2019
 1452,West Virginia,1985,2019
 1453,Green Bay,1985,2019

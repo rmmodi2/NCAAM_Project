@@ -2,6 +2,7 @@
 import pandas as pd 
 import numpy as np
 
+
 dtype_dict = {'Id':float,'Date':str,'Schl':str,'Location':str,'Opp':str,"Result":str,'MP':float,'FG':float,'FGA':float,'FG%':float,'2P':float,'2PA':float,'2P%':float,'3P':float,'3PA':float,'3P%':float,'FT':float,"FTA":float,'FT%':float,'PTS':float}
 skiprows_list = []
 for i in range(100000):
@@ -314,7 +315,7 @@ def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
     list_of_teams = statsFor['School']
     # print(list_of_teams)
     for k in list_of_teams:
-        print(k)
+        # print(k)
         statsForRow = statsFor.loc[statsFor['School'] == k]
         statsAgainstRow = statsAgainst.loc[statsAgainst['School'] == k]
         kenpomRow = kenpom.loc[kenpom['Team'] == k]
@@ -322,7 +323,6 @@ def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
         masseyRk = massey.loc[massey['TeamID']==teamId]['OrdinalRank'].array[0]
         statDict = {}
         statDict['kenpomRk'] = masseyRk
-        statDict['ConfWinPct'] = statsForRow['ConfW'].array[0] / (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0])
         if k in tournamentWins.keys():
             tourneywins = tournamentWins[k]
             if tourneywins == 6:
@@ -334,6 +334,10 @@ def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
             tourneylosses = 0
         statDict['OverallWinPct'] = (statsForRow['TotalW'].array[0] - tourneywins)/(statsForRow['TotalL'].array[0]-tourneylosses + statsForRow['TotalW'].array[0] - tourneywins)
         statDict['NonConfWinPct'] = (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins)/((statsForRow['TotalL'].array[0]-statsForRow['ConfL'].array[0]-tourneylosses) + (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins))
+        if (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0] == 0):
+            statDict['ConfWinPct'] = statDict['NonConfWinPct']
+        else:
+            statDict['ConfWinPct'] = statsForRow['ConfW'].array[0] / (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0])
         statDict['eFG%'] = statsForRow['eFG%'].array[0]
         # print(statDict['eFG%'])
         statDict['eFG%Against'] = statsAgainstRow['eFG%'].array[0]
