@@ -13,9 +13,9 @@ na_values_list = ["School","Id","Date","Schl","Location","Opp","Result","MP","FG
 #todo: read_csv into a seperate data frame for each year
 
 # allGames_1011_1718 = pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Data/Data/NCAAM_AllGames_1011_1718.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
-tournamentGames_1011_1718 = pd.read_csv("Data/NCAAM_TournamentGames_1011_1718.csv", header=0,na_values=na_values_list)
+# tournamentGames_1011_1718 = pd.read_csv("Data/NCAAM_TournamentGames_1011_1718.csv", header=0,na_values=na_values_list)
 
-tournamentGames_1011_1718 = tournamentGames_1011_1718.dropna()
+# tournamentGames_1011_1718 = tournamentGames_1011_1718.dropna()
 # print(tournamentGames_1011_1718)
 
 allGames_1011 = pd.read_csv("Data/AllGames/NCAAM_AllGames_1011.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
@@ -27,14 +27,30 @@ allGames_1516 = pd.read_csv("Data/AllGames/NCAAM_AllGames_1516.csv", names=dtype
 allGames_1617 = pd.read_csv("Data/AllGames/NCAAM_AllGames_1617.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
 allGames_1718 = pd.read_csv("Data/AllGames/NCAAM_AllGames_1718.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
 
-tournamentGames_1011 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1011.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
-tournamentGames_1112 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1112.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
-tournamentGames_1213 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1213.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
-tournamentGames_1314 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1314.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
-tournamentGames_1415 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1415.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
-tournamentGames_1516 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1516.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
-tournamentGames_1617 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1617.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
-tournamentGames_1718 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1718.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
+#remaking tournament games from Kaggle's Data
+
+tournamentGames = pd.read_csv("Data/KaggleData/DataFiles/NCAATourneyCompactResults.csv",header=0)
+# print(tournamentGames)
+
+tournamentGames_1011 = tournamentGames.loc[tournamentGames['Season']==2011]
+tournamentGames_1112 = tournamentGames.loc[tournamentGames['Season']==2012]
+tournamentGames_1213 = tournamentGames.loc[tournamentGames['Season']==2013]
+tournamentGames_1314 = tournamentGames.loc[tournamentGames['Season']==2014]
+tournamentGames_1415 = tournamentGames.loc[tournamentGames['Season']==2015]
+tournamentGames_1516 = tournamentGames.loc[tournamentGames['Season']==2016]
+tournamentGames_1617 = tournamentGames.loc[tournamentGames['Season']==2017]
+tournamentGames_1718 = tournamentGames.loc[tournamentGames['Season']==2018]
+
+
+
+# tournamentGames_1011 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1011.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
+# tournamentGames_1112 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1112.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
+# tournamentGames_1213 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1213.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
+# tournamentGames_1314 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1314.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
+# tournamentGames_1415 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1415.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
+# tournamentGames_1516 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1516.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
+# tournamentGames_1617 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1617.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
+# tournamentGames_1718 = pd.read_csv("Data/TournamentGames/NCAAM_TournamentGames_1718.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
 
 kenpomUseCols = [0,1,4,5,6]
 kenpomDTypeDict= {'Rk':float,'Team':str,'AdjEM':float,'AdjO':float,'AdjD':float}
@@ -59,6 +75,7 @@ teamStatsDTypeDict={'Rk':float,'School':str,'TotalW':float,'TotalL':float,'SRS':
 skiprows_list_teamStats = []
 teamStats_na_values_list = list(teamStatsDTypeDict.keys()) + ["School Advanced","Opponent Advanced",'Overall','Conf.','W','L','SRS']
 
+teamStats_0910 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_0910.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 teamStats_1011 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1011.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 teamStats_1112 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1112.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 teamStats_1213 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1213.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
@@ -68,6 +85,7 @@ teamStats_1516 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1516.csv",names=tea
 teamStats_1617 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1617.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 teamStats_1718 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1718.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 
+oppTeamStats_0910 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_0910.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 oppTeamStats_1011 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_1011.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 oppTeamStats_1112 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_1112.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 oppTeamStats_1213 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_1213.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
@@ -261,6 +279,7 @@ convertTeamNames(kenpom_1415,True)
 convertTeamNames(kenpom_1516,True)
 convertTeamNames(kenpom_1617,True)
 convertTeamNames(kenpom_1718,True)
+convertTeamNames(teamStats_0910,False)
 convertTeamNames(teamStats_1011,False)
 convertTeamNames(teamStats_1112,False)
 convertTeamNames(teamStats_1213,False)
@@ -269,6 +288,7 @@ convertTeamNames(teamStats_1415,False)
 convertTeamNames(teamStats_1516,False)
 convertTeamNames(teamStats_1617,False)
 convertTeamNames(teamStats_1718,False)
+convertTeamNames(oppTeamStats_0910,False)
 convertTeamNames(oppTeamStats_1011,False)
 convertTeamNames(oppTeamStats_1112,False)
 convertTeamNames(oppTeamStats_1213,False)
@@ -301,6 +321,7 @@ masseyOrdinals_1718 = masseyOrdinals[masseyOrdinals['Season']==2018]
 
 def createTeamStatistics(tournamentWinsAllYears):
     teamStatistics = {}
+    teamStatistics["0910"] = teamStats(teamStats_0910,oppTeamStats_0910,kenpom_1011,masseyOrdinals_0910,tournamentWinsAllYears["0910"],teams)
     teamStatistics["1011"] = teamStats(teamStats_1011,oppTeamStats_1011,kenpom_1011,masseyOrdinals_1011,tournamentWinsAllYears["1011"],teams)
     teamStatistics["1112"] = teamStats(teamStats_1112,oppTeamStats_1112,kenpom_1112,masseyOrdinals_1112,tournamentWinsAllYears["1112"],teams)
     teamStatistics["1213"] = teamStats(teamStats_1213,oppTeamStats_1213,kenpom_1213,masseyOrdinals_1213,tournamentWinsAllYears["1213"],teams)
@@ -366,6 +387,7 @@ def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
 def createTournamentWinsAllYears():
     tournamentWinsAllYears = {}
     seenGames = {}
+    tournamentWinsAllYears["0910"],seenGames["0910"] = tournamentTeamWins(tournamentGames_0910)
     tournamentWinsAllYears["1011"],seenGames["1011"] = tournamentTeamWins(tournamentGames_1011)
     tournamentWinsAllYears["1112"],seenGames["1112"] = tournamentTeamWins(tournamentGames_1112)
     tournamentWinsAllYears["1213"],seenGames["1213"] = tournamentTeamWins(tournamentGames_1213)
@@ -741,5 +763,5 @@ def createTournamentDateList(seenGames):
 def tournamentWinsAllYears(year):
     return teamRecord.tournamentWinsAllYears(year)
 
-def createXYLogisticRegression(teamStatsByYear):
+# def createXYLogisticRegression(teamStatsByYear):
 
