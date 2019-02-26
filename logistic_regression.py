@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import normalize
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
 import random
 
 
@@ -131,40 +132,48 @@ tournamentGamesData = helper.getTournamentGames()
 # print("printing the testing games data")
 # print(testingGamesData)
 
-i = 0
-counter = []
-for i in range(100):
-    train, validation = train_test_split(tournamentGamesData, test_size=0.2)
-    # print(len(train))
-    # print("printing the training games data")
-    # print(train)
+# i = 0
+# counter = []
+# for i in range(100):
+#     train, validation = train_test_split(tournamentGamesData, test_size=0.2)
+#     # print(len(train))
+#     # print("printing the training games data")
+#     # print(train)
 
-    # print("printing the validation data")
-    # print(validation)
+#     # print("printing the validation data")
+#     # print(validation)
 
-    x,y = helper.createXYLogisticRegression(teamStatistics,train)
-    # print(len(x))
-    # print(len(y))
+#     x,y = helper.createXYLogisticRegression(teamStatistics,train)
+#     # print(len(x))
+#     # print(len(y))
 
-    x = np.asarray(x)
-    y = np.asarray(y)
-    # nsamples, nx, ny = x.shape
-    # x = np.reshape(x,(nsamples,nx*ny))
-    # print(x.shape)
-    logRegModel = LogisticRegression(solver='lbfgs').fit(x,y)
+#     x = np.asarray(x)
+#     y = np.asarray(y)
+#     # nsamples, nx, ny = x.shape
+#     # x = np.reshape(x,(nsamples,nx*ny))
+#     # print(x.shape)
+#     logRegModel = LogisticRegression(solver='lbfgs').fit(x,y)
 
-    x,y = helper.createXYLogisticRegression(teamStatistics,validation)
+#     x,y = helper.createXYLogisticRegression(teamStatistics,validation)
 
-    x = np.asarray(x)
-    y = np.asarray(y)
-    # nsamples, nx, ny = x.shape
-    # x = np.reshape(x,(nsamples,nx*ny))
+#     x = np.asarray(x)
+#     y = np.asarray(y)
+#     # nsamples, nx, ny = x.shape
+#     # x = np.reshape(x,(nsamples,nx*ny))
 
-    counter.append(logRegModel.score(x,y))
-    i+=1
-score = sum(counter)/len(counter)
-sdev = np.std(counter)
-print("our validation on 100 runs ended up averaging an accuracy of "+str(score)+" with a standard deviation of "+str(sdev))
+#     counter.append(logRegModel.score(x,y))
+#     i+=1
+# score = sum(counter)/len(counter)
+# sdev = np.std(counter)
+# print("our validation on 100 runs ended up averaging an accuracy of "+str(score)+" with a standard deviation of "+str(sdev))
+
+x,y = helper.createXYLogisticRegression(teamStatistics,tournamentGamesData)
+
+logRegModel = GridSearchCV(LogisticRegression(solver='lbfgs',penalty='l2'),param_grid={"C":[.0001,.001,.01,.1,1,10,100,1000]}).fit(x,y)
+
+print(logRegModel.best_params_)
+print(logRegModel.best_score_)
+print(logRegModel.cv_results_)
 
 
 
