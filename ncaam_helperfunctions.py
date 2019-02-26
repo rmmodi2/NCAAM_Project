@@ -74,11 +74,11 @@ kenpom_1617 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1617.csv",names=kenpomD
 kenpom_1718 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1718.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
 
 
-teamStatsUseCols = [0,1,3,4,6,8,9,16,17,21,25,26,28]
-teamStatsDTypeDict={'Rk':float,'School':str,'TotalW':float,'TotalL':float,'SRS':float, 'ConfW':float,'ConfL':float,'Pace':float,'ORtg':float,'TRB%':float,'eFG%':float,'TOV%':float,'FT/FGA':float,}
+teamStatsUseCols = [0,1,3,4,6,7,8,9,16,17,21,25,26,28]
+teamStatsDTypeDict={'Rk':float,'School':str,'TotalW':float,'TotalL':float,'SRS':float,'SOS':float, 'ConfW':float,'ConfL':float,'Pace':float,'ORtg':float,'TRB%':float,'eFG%':float,'TOV%':float,'FT/FGA':float,}
 # skiprows_list_teamStats = skiprows_list
 skiprows_list_teamStats = []
-teamStats_na_values_list = list(teamStatsDTypeDict.keys()) + ["School Advanced","Opponent Advanced",'Overall','Conf.','W','L','SRS']
+teamStats_na_values_list = list(teamStatsDTypeDict.keys()) + ["School Advanced","Opponent Advanced",'Overall','Conf.','W','L','SRS','SOS']
 
 teamStats_0910 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_0910.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 teamStats_1011 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1011.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
@@ -385,6 +385,7 @@ def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
         statDict['DRtg'] = statsAgainstRow['ORtg'].array[0]
         statDict['netRtg'] = statDict['ORtg'] - statDict['DRtg']
         statDict['pace'] = statsForRow['Pace'].array[0]
+        statDict['SOS'] = statsForRow['SOS'].array[0]
         teamStats[k] = statDict
     return teamStats        
 
@@ -632,12 +633,14 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
     def helperCreateLogRegXY(winningTeam,losingTeam,year,i):
         x_entry = []
         wNonConfWinPct = teamStatsByYear[year][winningTeam]['NonConfWinPct']
+        # wConfWinPct = teamStatsByYear[year][winningTeam]['ConfWinPct']
         wNetEFG = teamStatsByYear[year][winningTeam]['netEFG%']
         wKenpomRk = teamStatsByYear[year][winningTeam]['kenpomRk']
         wNetTRB = teamStatsByYear[year][winningTeam]['netTRB%']
         wNetTOV = teamStatsByYear[year][winningTeam]['netTOV%']
         # x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
         lNonConfWinPct = teamStatsByYear[year][losingTeam]['NonConfWinPct']
+        # lConfWinPct = teamStatsByYear[year][losingTeam]['ConfWinPct']
         lNetEFG = teamStatsByYear[year][losingTeam]['netEFG%']
         lKenpomRk = teamStatsByYear[year][losingTeam]['kenpomRk']
         lNetTRB = teamStatsByYear[year][losingTeam]['netTRB%']
@@ -651,7 +654,7 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
             return np.subtract(t1,t2),1
         else:
             t1=np.asarray([lNonConfWinPct,lNetEFG,lKenpomRk,lNetTRB,lNetTOV])
-            t2=np.asarray([wNonConfWinPct,wNetEFG,wKenpomRk,lNetTRB,lNetTOV])
+            t2=np.asarray([wNonConfWinPct,wNetEFG,wKenpomRk,wNetTRB,wNetTOV])
             return np.subtract(t1,t2),0
     
     for index,row in trainingGames.iterrows():
