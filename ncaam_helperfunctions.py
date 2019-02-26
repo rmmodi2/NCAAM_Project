@@ -508,6 +508,15 @@ def createXYArraysStats(teamStatistics,tournamentWinsDict,stat):
                 print(team+" wasn't in both the tournament wins dict and the stats dict")
     return x,y
 
+def createXYMultipleStats(teamStatistics,stat1,stat2):
+    x = {}
+    y = {}
+    for year in teamStatistics.keys():
+        for team in teamStatistics[year]:
+            x[team+str(year)]=teamStatistics[year][team][stat1]
+            y[team+str(year)]=teamStatistics[year][team][stat2]
+    return x,y
+
 #helper function to get every team's overall winning % for a given season
 def teamWinPct(allGames,tournamentGameDates):
     #team_roadWinPct is a dict of team : (#roadwins,#roadgames)

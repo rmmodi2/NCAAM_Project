@@ -173,7 +173,7 @@ logRegModel = GridSearchCV(LogisticRegression(solver='lbfgs',penalty='l2'),param
 
 print(logRegModel.best_params_)
 print(logRegModel.best_score_)
-print(logRegModel.cv_results_)
+# print(logRegModel.cv_results_)
 
 
 
