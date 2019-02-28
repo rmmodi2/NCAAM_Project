@@ -26,49 +26,51 @@ tournamentWinsAllYears,tournament_dates = helper.createTournamentWinsAllYears()
 teamStatistics = helper.createTeamStatistics(tournamentWinsAllYears)
 
 
-####### THIS SECTION IS FOR STATS CORRELATING TO TOURNAMENT WINS#######
+###### THIS SECTION IS FOR STATS CORRELATING TO TOURNAMENT WINS#######
 
 # print(teamStatistics["1718"]["Villanova"]["OverallWinPct"])
 
-# stat = 'kenpomRk'
+stat = 'netBLK%'
 
-# #todo: convert into a X NP Array -> roadWinPct and a Y NP Array -> tournamentTeamWins
-# statdict,tournamentWins = helper.createXYArraysStats(teamStatistics,tournamentWinsAllYears,stat)
-# # print(tournamentWins)
-# statList = np.asarray(list(statdict.values()),dtype=float)
-# tournamentWinsList = np.asarray(list(tournamentWins.values()),dtype=int)
+#todo: convert into a X NP Array -> roadWinPct and a Y NP Array -> tournamentTeamWins
+statdict,tournamentWins = helper.createXYArraysStats(teamStatistics,tournamentWinsAllYears,stat)
+# print(tournamentWins)
+statList = np.asarray(list(statdict.values()),dtype=float)
+tournamentWinsList = np.asarray(list(tournamentWins.values()),dtype=int)
 
-# #todo: plot tournamentTeamWins vs roadWinPct
-# plt.plot(statList,tournamentWinsList,"ro")
-# plt.xlabel(stat)
-# plt.ylabel("tournamentWins")
-# statdictkeys = list(statdict.keys())
-# statdictvals = list(statdict.values())
+#todo: plot tournamentTeamWins vs roadWinPct
+plt.plot(statList,tournamentWinsList,"ro")
+plt.xlabel(stat)
+plt.ylabel("tournamentWins")
+statdictkeys = list(statdict.keys())
+statdictvals = list(statdict.values())
 
-# #todo: apply Kendall Tau Correlation for x=road win% and y=# of NCAA Tournament Wins
-# kendallTau,p = stats.kendalltau(statList,tournamentWinsList)
-# print("The Kendall Tau Correlation between "+stat+" and ncaa tournament wins is:" +str(kendallTau))
+#todo: apply Kendall Tau Correlation for x=road win% and y=# of NCAA Tournament Wins
+kendallTau,p = stats.kendalltau(statList,tournamentWinsList)
+print("The Kendall Tau Correlation between "+stat+" and ncaa tournament wins is:" +str(kendallTau))
 
-# plt.show()
+plt.show()
 
 
 ######## THIS SECTION IS FOR STATS CORRELATING TO OTHER STATS ######
-stat1 = "OverallWinPct"
-stat2 = "NonConfWinPct"
+# stat1 = "OverallWinPct"
+# stat2 = "NonConfWinPct"
 
-statdict1,statdict2 = helper.createXYMultipleStats(teamStatistics,stat1,stat2)
+# statdict1,statdict2 = helper.createXYMultipleStats(teamStatistics,stat1,stat2)
 
 
-statList1 = np.asarray(list(statdict1.values()),dtype=float)
-statList2 = np.asarray(list(statdict2.values()),dtype=float)
+# statList1 = np.asarray(list(statdict1.values()),dtype=float)
+# statList2 = np.asarray(list(statdict2.values()),dtype=float)
 
-#todo: plot tournamentTeamWins vs roadWinPct
-plt.plot(statList1,statList2,"ro")
-plt.xlabel(stat1)
-plt.ylabel(stat2)
+# #todo: plot tournamentTeamWins vs roadWinPct
+# plt.plot(statList1,statList2,"ro")
+# plt.xlabel(stat1)
+# plt.ylabel(stat2)
 
-#todo: apply Kendall Tau Correlation for x=road win% and y=# of NCAA Tournament Wins
-kendallTau,p = stats.kendalltau(statList1,statList2)
-print("The Kendall Tau Correlation between "+stat1+" and "+stat2+" is "+str(kendallTau))
+# #todo: apply Kendall Tau Correlation for x=road win% and y=# of NCAA Tournament Wins
+# kendallTau,p = stats.kendalltau(statList1,statList2)
+# print("The Kendall Tau Correlation between "+stat1+" and "+stat2+" is "+str(kendallTau))
+# plt.show()
 
-plt.show()
+# teamStatisticsMatrix = helper.createCorrelationMatrix(teamStatistics)
+# print(teamStatisticsMatrix.corr())

@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import normalize
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
 import random
 
 
@@ -23,30 +25,43 @@ conferences = pd.read_csv("Data/KaggleData/TeamConferences.csv",header=0)
 # print(teamStatistics["1011"]["Notre Dame"])
 #normalized = (old - mean) / (sdev)
 
+teamStatisticsMatrix = helper.createCorrelationMatrix(teamStatistics)
+print(teamStatisticsMatrix.corr())
+
+
 def normalizeByYear(teamStatisticsYear):
     statsDicts = list(teamStatisticsYear.values())
     meanNonConfWinPct = sum(item['NonConfWinPct'] for item in statsDicts) / len(statsDicts)
+    meanOverallWinPct = sum(item['OverallWinPct'] for item in statsDicts) / len(statsDicts)
+    meanRoadWinPct = sum(item['RoadWinPct'] for item in statsDicts) / len(statsDicts)
     meanNetEFG = sum(item['netEFG%'] for item in statsDicts) / len(statsDicts)
     meanKenpom = sum(item['kenpomRk'] for item in statsDicts) / len(statsDicts)
     meanNetTRB = sum(item['netTRB%'] for item in statsDicts) / len(statsDicts)
     meanNetTOV = sum(item['netTOV%'] for item in statsDicts) / len(statsDicts)
-    meanSOS = sum(item['SOS'] for item in statsDicts) / len(statsDicts)
-    meanConfWinPct = sum(item['ConfWinPct'] for item in statsDicts) / len(statsDicts)
+    meanNetBLK = sum(item['netBLK%'] for item in statsDicts) / len(statsDicts)
+#     meanSOS = sum(item['SOS'] for item in statsDicts) / len(statsDicts)
+#     meanConfWinPct = sum(item['ConfWinPct'] for item in statsDicts) / len(statsDicts)
     sdevNonConfWinPct = np.std([item['NonConfWinPct'] for item in statsDicts]) 
+    sdevOverallWinPct = np.std([item['OverallWinPct'] for item in statsDicts]) 
+    sdevRoadWinPct = np.std([item['RoadWinPct'] for item in statsDicts]) 
     sdevNetEFG = np.std([item['netEFG%'] for item in statsDicts]) 
     sdevKenpom = np.std([item['kenpomRk'] for item in statsDicts])
     sdevNetTRB = np.std([item['netTRB%'] for item in statsDicts])
     sdevNetTOV = np.std([item['netTOV%'] for item in statsDicts]) 
-    sdevSOS = np.std([item['SOS'] for item in statsDicts])
-    sdevConfWinPct = np.std([item['ConfWinPct'] for item in statsDicts])
+    sdevNetBLK = np.std([item['netBLK%'] for item in statsDicts]) 
+#     sdevSOS = np.std([item['SOS'] for item in statsDicts])
+#     sdevConfWinPct = np.std([item['ConfWinPct'] for item in statsDicts])
     for k in teamStatisticsYear.keys():
         teamStatisticsYear[k]['NonConfWinPct'] = (teamStatisticsYear[k]['NonConfWinPct']-meanNonConfWinPct)/sdevNonConfWinPct
+        teamStatisticsYear[k]['OverallWinPct'] = (teamStatisticsYear[k]['OverallWinPct']-meanOverallWinPct)/sdevOverallWinPct
+        teamStatisticsYear[k]['RoadWinPct'] = (teamStatisticsYear[k]['RoadWinPct']-meanRoadWinPct)/sdevRoadWinPct
         teamStatisticsYear[k]['netEFG%'] = (teamStatisticsYear[k]['netEFG%']-meanNetEFG)/sdevNetEFG
         teamStatisticsYear[k]['kenpomRk'] = (teamStatisticsYear[k]['kenpomRk']-meanKenpom)/sdevKenpom
         teamStatisticsYear[k]['netTRB%'] = (teamStatisticsYear[k]['netTRB%']-meanNetTRB)/sdevNetTRB
         teamStatisticsYear[k]['netTOV%'] = (teamStatisticsYear[k]['netTOV%']-meanNetTOV)/sdevNetTOV
-        teamStatisticsYear[k]['SOS'] = (teamStatisticsYear[k]['SOS']-meanSOS)/sdevSOS
-        teamStatisticsYear[k]['ConfWinPct'] = (teamStatisticsYear[k]['ConfWinPct']-meanConfWinPct)/sdevConfWinPct
+        teamStatisticsYear[k]['netBLK%'] = (teamStatisticsYear[k]['netBLK%']-meanNetBLK)/sdevNetBLK
+        # teamStatisticsYear[k]['SOS'] = (teamStatisticsYear[k]['SOS']-meanSOS)/sdevSOS
+        # teamStatisticsYear[k]['ConfWinPct'] = (teamStatisticsYear[k]['ConfWinPct']-meanConfWinPct)/sdevConfWinPct
 
 print("now we are normalizing by year")
 normalizeByYear(teamStatistics[2010])
@@ -169,15 +184,50 @@ tournamentGamesData = helper.getTournamentGames()
 
 x,y = helper.createXYLogisticRegression(teamStatistics,tournamentGamesData)
 
-logRegModel = GridSearchCV(LogisticRegression(solver='lbfgs',penalty='l2'),param_grid={"C":[.0001,.001,.01,.1,1,10,100,1000]}).fit(x,y)
-
-print(logRegModel.best_params_)
-print(logRegModel.best_score_)
-# print(logRegModel.cv_results_)
+print(len(x))
 
 
+######### FOR LOGISTIC REGRESSION ###########
+
+# logRegModel = GridSearchCV(LogisticRegression(solver='lbfgs',penalty='l2'),param_grid={"C":[.0001,.001,.01,.1,1,10,100,1000]},cv=10).fit(x,y)
+
+# print(logRegModel.best_params_)
+# print(logRegModel.best_score_)
+# # print(logRegModel.cv_results_)
+
+######### FOR RANDOM FORESTS ##########
+
+rf = RandomForestClassifier()
+
+# n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
+# max_features = ['auto', 'sqrt']
+# max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
+# max_depth.append(None)
+# min_samples_split = [2, 5, 10]
+# min_samples_leaf = [1, 2, 4]
+# bootstrap = [True, False]
+
+param_tries={"n_estimators":[100,200,300,400,500],
+        # "min_samples_split":[2,3,4,5,6,7,8,9,10],
+        'min_samples_split':[10,20,50,100,200],
+        # "min_samples_leaf":[1,2,3,4,5],
+        'min_samples_leaf':[10,20,50,100,200],
+        'max_features':[None],
+        'max_depth':[10,20,30,40,50,60,70],
+        'bootstrap':[True]}
+
+#helps narrow down to which hyperparameter options are best
+
+randomForestModel = RandomizedSearchCV(estimator = rf, param_distributions = param_tries, n_iter = 100, cv = 10, verbose=2, random_state=42, n_jobs = -1).fit(x,y)
+print(randomForestModel.best_score_)
+print(randomForestModel.best_params_)
 
 
+
+# randomForestModel = GridSearchCV(cv=10,estimator=rf,param_grid=param_tries).fit(x,y)
+
+# print(randomForestModel.best_score_)
+# print(randomForestModel.best_params_)
 
 
 

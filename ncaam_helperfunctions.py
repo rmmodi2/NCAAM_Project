@@ -74,11 +74,11 @@ kenpom_1617 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1617.csv",names=kenpomD
 kenpom_1718 = pd.read_csv("Data/KenpomStats/NCAAM_Kenpom_1718.csv",names=kenpomDTypeDict.keys(),skiprows=skiprows_list_kenpom,dtype=kenpomDTypeDict,na_values=kenpom_na_values_list,usecols=kenpomUseCols)
 
 
-teamStatsUseCols = [0,1,3,4,6,7,8,9,16,17,21,25,26,28]
-teamStatsDTypeDict={'Rk':float,'School':str,'TotalW':float,'TotalL':float,'SRS':float,'SOS':float, 'ConfW':float,'ConfL':float,'Pace':float,'ORtg':float,'TRB%':float,'eFG%':float,'TOV%':float,'FT/FGA':float,}
+teamStatsUseCols = [0,1,3,4,6,7,8,9,12,13,16,17,21,22,24,25,26,28]
+teamStatsDTypeDict={'Rk':float,'School':str,'TotalW':float,'TotalL':float,'SRS':float,'SOS':float, 'ConfW':float,'ConfL':float,'RoadW':float,'RoadL':float,'Pace':float,'ORtg':float,'TRB%':float,'AST%':float,'BLK%':float,'eFG%':float,'TOV%':float,'FT/FGA':float,}
 # skiprows_list_teamStats = skiprows_list
 skiprows_list_teamStats = []
-teamStats_na_values_list = list(teamStatsDTypeDict.keys()) + ["School Advanced","Opponent Advanced",'Overall','Conf.','W','L','SRS','SOS']
+teamStats_na_values_list = list(teamStatsDTypeDict.keys()) + ["School Advanced","Opponent Advanced",'Overall','Conf.','W','L','SRS','SOS','Away']
 
 teamStats_0910 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_0910.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 teamStats_1011 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1011.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
@@ -326,15 +326,15 @@ masseyOrdinals_1718 = masseyOrdinals[masseyOrdinals['Season']==2018]
 
 def createTeamStatistics(tournamentWinsAllYears):
     teamStatistics = {}
-    teamStatistics[2010] = teamStats(teamStats_0910,oppTeamStats_0910,kenpom_1011,masseyOrdinals_0910,tournamentWinsAllYears["0910"],teams)
-    teamStatistics[2011] = teamStats(teamStats_1011,oppTeamStats_1011,kenpom_1011,masseyOrdinals_1011,tournamentWinsAllYears["1011"],teams)
-    teamStatistics[2012] = teamStats(teamStats_1112,oppTeamStats_1112,kenpom_1112,masseyOrdinals_1112,tournamentWinsAllYears["1112"],teams)
-    teamStatistics[2013] = teamStats(teamStats_1213,oppTeamStats_1213,kenpom_1213,masseyOrdinals_1213,tournamentWinsAllYears["1213"],teams)
-    teamStatistics[2014] = teamStats(teamStats_1314,oppTeamStats_1314,kenpom_1314,masseyOrdinals_1314,tournamentWinsAllYears["1314"],teams)
-    teamStatistics[2015] = teamStats(teamStats_1415,oppTeamStats_1415,kenpom_1415,masseyOrdinals_1415,tournamentWinsAllYears["1415"],teams)
-    teamStatistics[2016] = teamStats(teamStats_1516,oppTeamStats_1516,kenpom_1516,masseyOrdinals_1516,tournamentWinsAllYears["1516"],teams)
-    teamStatistics[2017] = teamStats(teamStats_1617,oppTeamStats_1617,kenpom_1617,masseyOrdinals_1617,tournamentWinsAllYears["1617"],teams)
-    teamStatistics[2018] = teamStats(teamStats_1718,oppTeamStats_1718,kenpom_1718,masseyOrdinals_1718,tournamentWinsAllYears["1718"],teams)
+    teamStatistics[2010] = teamStats(teamStats_0910,oppTeamStats_0910,kenpom_1011,masseyOrdinals_0910,tournamentWinsAllYears[2010],teams)
+    teamStatistics[2011] = teamStats(teamStats_1011,oppTeamStats_1011,kenpom_1011,masseyOrdinals_1011,tournamentWinsAllYears[2011],teams)
+    teamStatistics[2012] = teamStats(teamStats_1112,oppTeamStats_1112,kenpom_1112,masseyOrdinals_1112,tournamentWinsAllYears[2012],teams)
+    teamStatistics[2013] = teamStats(teamStats_1213,oppTeamStats_1213,kenpom_1213,masseyOrdinals_1213,tournamentWinsAllYears[2013],teams)
+    teamStatistics[2014] = teamStats(teamStats_1314,oppTeamStats_1314,kenpom_1314,masseyOrdinals_1314,tournamentWinsAllYears[2014],teams)
+    teamStatistics[2015] = teamStats(teamStats_1415,oppTeamStats_1415,kenpom_1415,masseyOrdinals_1415,tournamentWinsAllYears[2015],teams)
+    teamStatistics[2016] = teamStats(teamStats_1516,oppTeamStats_1516,kenpom_1516,masseyOrdinals_1516,tournamentWinsAllYears[2016],teams)
+    teamStatistics[2017] = teamStats(teamStats_1617,oppTeamStats_1617,kenpom_1617,masseyOrdinals_1617,tournamentWinsAllYears[2017],teams)
+    teamStatistics[2018] = teamStats(teamStats_1718,oppTeamStats_1718,kenpom_1718,masseyOrdinals_1718,tournamentWinsAllYears[2018],teams)
     return teamStatistics
 
 #####TO DO######
@@ -364,10 +364,11 @@ def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
             tourneylosses = 0
         statDict['OverallWinPct'] = (statsForRow['TotalW'].array[0] - tourneywins)/(statsForRow['TotalL'].array[0]-tourneylosses + statsForRow['TotalW'].array[0] - tourneywins)
         statDict['NonConfWinPct'] = (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins)/((statsForRow['TotalL'].array[0]-statsForRow['ConfL'].array[0]-tourneylosses) + (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins))
-        if (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0] == 0):
-            statDict['ConfWinPct'] = statDict['NonConfWinPct']
-        else:
-            statDict['ConfWinPct'] = statsForRow['ConfW'].array[0] / (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0])
+        # if (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0] == 0):
+        #     statDict['ConfWinPct'] = statDict['NonConfWinPct']
+        # else:
+        #     statDict['ConfWinPct'] = statsForRow['ConfW'].array[0] / (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0])
+        statDict['RoadWinPct'] = statsForRow['RoadW'].array[0] / (statsForRow['RoadL'].array[0] + statsForRow['RoadW'].array[0])
         statDict['eFG%'] = statsForRow['eFG%'].array[0]
         # print(statDict['eFG%'])
         statDict['eFG%Against'] = statsAgainstRow['eFG%'].array[0]
@@ -378,14 +379,20 @@ def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
         statDict['TRB%'] = statsForRow['TRB%'].array[0]
         statDict['TRB%Against'] = statsAgainstRow['TRB%'].array[0]
         statDict['netTRB%'] = statDict['TRB%'] - statDict['TRB%Against']
-        statDict['FTRate'] = statsForRow['FT/FGA'].array[0]
-        statDict['FTRateAgainst'] = statsAgainstRow['FT/FGA'].array[0]
-        statDict['netFTRate'] = statDict['FTRate'] - statDict['FTRateAgainst']
-        statDict['ORtg'] = statsForRow['ORtg'].array[0]
-        statDict['DRtg'] = statsAgainstRow['ORtg'].array[0]
-        statDict['netRtg'] = statDict['ORtg'] - statDict['DRtg']
-        statDict['pace'] = statsForRow['Pace'].array[0]
-        statDict['SOS'] = statsForRow['SOS'].array[0]
+        statDict['BLK%'] = statsForRow['BLK%'].array[0]
+        statDict['BLK%Against'] = statsAgainstRow['BLK%'].array[0]
+        statDict['netBLK%'] = statDict['BLK%'] - statDict['BLK%Against']
+        # statDict['AST%'] = statsForRow['AST%'].array[0]
+        # statDict['AST%Against'] = statsAgainstRow['AST%'].array[0]
+        # statDict['netAST%'] = statDict['AST%'] - statDict['AST%Against']
+        # statDict['FTRate'] = statsForRow['FT/FGA'].array[0]
+        # statDict['FTRateAgainst'] = statsAgainstRow['FT/FGA'].array[0]
+        # statDict['netFTRate'] = statDict['FTRate'] - statDict['FTRateAgainst']
+        # statDict['ORtg'] = statsForRow['ORtg'].array[0]
+        # statDict['DRtg'] = statsAgainstRow['ORtg'].array[0]
+        # statDict['netRtg'] = statDict['ORtg'] - statDict['DRtg']
+        # statDict['pace'] = statsForRow['Pace'].array[0]
+        # statDict['SOS'] = statsForRow['SOS'].array[0]
         teamStats[k] = statDict
     return teamStats        
 
@@ -393,15 +400,15 @@ def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
 def createTournamentWinsAllYears():
     tournamentWinsAllYears = {}
     seenGames = {}
-    tournamentWinsAllYears["0910"],seenGames["0910"] = tournamentTeamWins(tournamentGames_0910)
-    tournamentWinsAllYears["1011"],seenGames["1011"] = tournamentTeamWins(tournamentGames_1011)
-    tournamentWinsAllYears["1112"],seenGames["1112"] = tournamentTeamWins(tournamentGames_1112)
-    tournamentWinsAllYears["1213"],seenGames["1213"] = tournamentTeamWins(tournamentGames_1213)
-    tournamentWinsAllYears["1314"],seenGames["1314"] = tournamentTeamWins(tournamentGames_1314)
-    tournamentWinsAllYears["1415"],seenGames["1415"] = tournamentTeamWins(tournamentGames_1415)
-    tournamentWinsAllYears["1516"],seenGames["1516"] = tournamentTeamWins(tournamentGames_1516)
-    tournamentWinsAllYears["1617"],seenGames["1617"] = tournamentTeamWins(tournamentGames_1617)
-    tournamentWinsAllYears["1718"],seenGames["1718"] = tournamentTeamWins(tournamentGames_1718)
+    tournamentWinsAllYears[2010],seenGames["0910"] = tournamentTeamWins(tournamentGames_0910)
+    tournamentWinsAllYears[2011],seenGames["1011"] = tournamentTeamWins(tournamentGames_1011)
+    tournamentWinsAllYears[2012],seenGames["1112"] = tournamentTeamWins(tournamentGames_1112)
+    tournamentWinsAllYears[2013],seenGames["1213"] = tournamentTeamWins(tournamentGames_1213)
+    tournamentWinsAllYears[2014],seenGames["1314"] = tournamentTeamWins(tournamentGames_1314)
+    tournamentWinsAllYears[2015],seenGames["1415"] = tournamentTeamWins(tournamentGames_1415)
+    tournamentWinsAllYears[2016],seenGames["1516"] = tournamentTeamWins(tournamentGames_1516)
+    tournamentWinsAllYears[2017],seenGames["1617"] = tournamentTeamWins(tournamentGames_1617)
+    tournamentWinsAllYears[2018],seenGames["1718"] = tournamentTeamWins(tournamentGames_1718)
     return tournamentWinsAllYears,createTournamentDateList(seenGames)
 
 def createRoadWinPctAllYears(tournamentDates):
@@ -498,11 +505,11 @@ def createXYArraysStats(teamStatistics,tournamentWinsDict,stat):
     for year in tournamentWinsDict.keys():
         for team in tournamentWinsDict[year].keys():
             if (team in teamStatistics[year].keys()):
-                x[team+year]=(teamStatistics[year][team][stat])
+                x[team+str(year)]=(teamStatistics[year][team][stat])
                 # print(tournamentWinsDict[year][team])
-                y[team+year]=(tournamentWinsDict[year][team])
-                if x[team+year] == 1 and y[team+year] == 0:
-                    print(team+year)
+                y[team+str(year)]=(tournamentWinsDict[year][team])
+                if x[team+str(year)] == 1 and y[team+str(year)] == 0:
+                    print(team+str(year))
 
             else:
                 print(team+" wasn't in both the tournament wins dict and the stats dict")
@@ -643,27 +650,33 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
         x_entry = []
         wNonConfWinPct = teamStatsByYear[year][winningTeam]['NonConfWinPct']
         # wConfWinPct = teamStatsByYear[year][winningTeam]['ConfWinPct']
+        wOverallWinPct = teamStatsByYear[year][winningTeam]['OverallWinPct']
+        wRoadWinPct = teamStatsByYear[year][winningTeam]['RoadWinPct']
         wNetEFG = teamStatsByYear[year][winningTeam]['netEFG%']
         wKenpomRk = teamStatsByYear[year][winningTeam]['kenpomRk']
         wNetTRB = teamStatsByYear[year][winningTeam]['netTRB%']
         wNetTOV = teamStatsByYear[year][winningTeam]['netTOV%']
+        wNetBLK = teamStatsByYear[year][winningTeam]['netBLK%']
         # x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
         lNonConfWinPct = teamStatsByYear[year][losingTeam]['NonConfWinPct']
+        lOverallWinPct = teamStatsByYear[year][losingTeam]['OverallWinPct']
+        lRoadWinPct = teamStatsByYear[year][losingTeam]['RoadWinPct']
         # lConfWinPct = teamStatsByYear[year][losingTeam]['ConfWinPct']
         lNetEFG = teamStatsByYear[year][losingTeam]['netEFG%']
         lKenpomRk = teamStatsByYear[year][losingTeam]['kenpomRk']
         lNetTRB = teamStatsByYear[year][losingTeam]['netTRB%']
         lNetTOV = teamStatsByYear[year][losingTeam]['netTOV%']
+        lNetBLK = teamStatsByYear[year][losingTeam]['netBLK%']
         # x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk]) 
         # x.append(x_entry)
         # y.append(1)
         if i % 2 == 0:
-            t1=np.asarray([wNonConfWinPct,wNetEFG,wKenpomRk,wNetTRB,wNetTOV])
-            t2=np.asarray([lNonConfWinPct,lNetEFG,lKenpomRk,lNetTRB,lNetTOV]) 
+            t1=np.asarray([wNetEFG,wKenpomRk,wNetTRB,wNetTOV,wNonConfWinPct])
+            t2=np.asarray([lNetEFG,lKenpomRk,lNetTRB,lNetTOV,lNonConfWinPct]) 
             return np.subtract(t1,t2),1
         else:
-            t1=np.asarray([lNonConfWinPct,lNetEFG,lKenpomRk,lNetTRB,lNetTOV])
-            t2=np.asarray([wNonConfWinPct,wNetEFG,wKenpomRk,wNetTRB,wNetTOV])
+            t1=np.asarray([lNetEFG,lKenpomRk,lNetTRB,lNetTOV,lNonConfWinPct])
+            t2=np.asarray([wNetEFG,wKenpomRk,wNetTRB,wNetTOV,wNonConfWinPct])
             return np.subtract(t1,t2),0
     
     for index,row in trainingGames.iterrows():
@@ -677,3 +690,14 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
         y.append(ytoapp)
         i=i+1
     return x,y
+
+def createCorrelationMatrix(teamStatistics):
+    outerArray = []
+    for year in teamStatistics.keys():
+        for team in teamStatistics[year].keys():
+            outerArray.append(tuple(teamStatistics[year][team].values()))
+    df = pd.DataFrame(outerArray,columns=teamStatistics[2010]['Kansas State'].keys())
+    # print(df)
+    return df
+
+    
