@@ -671,12 +671,12 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
         # x.append(x_entry)
         # y.append(1)
         if i % 2 == 0:
-            t1=np.asarray([wNetEFG,wKenpomRk,wNetTRB,wNetTOV,wNonConfWinPct])
-            t2=np.asarray([lNetEFG,lKenpomRk,lNetTRB,lNetTOV,lNonConfWinPct]) 
+            t1=np.asarray([wNetEFG,wKenpomRk,wNetTRB,wNetTOV,wNetBLK])
+            t2=np.asarray([lNetEFG,lKenpomRk,lNetTRB,lNetTOV,lNetBLK]) 
             return np.subtract(t1,t2),1
         else:
-            t1=np.asarray([lNetEFG,lKenpomRk,lNetTRB,lNetTOV,lNonConfWinPct])
-            t2=np.asarray([wNetEFG,wKenpomRk,wNetTRB,wNetTOV,wNonConfWinPct])
+            t1=np.asarray([lNetEFG,lKenpomRk,lNetTRB,lNetTOV,lNetBLK])
+            t2=np.asarray([wNetEFG,wKenpomRk,wNetTRB,wNetTOV,wNetBLK])
             return np.subtract(t1,t2),0
     
     for index,row in trainingGames.iterrows():
@@ -699,5 +699,3 @@ def createCorrelationMatrix(teamStatistics):
     df = pd.DataFrame(outerArray,columns=teamStatistics[2010]['Kansas State'].keys())
     # print(df)
     return df
-
-    
