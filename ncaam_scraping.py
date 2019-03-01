@@ -8,8 +8,10 @@ base_url_teamstatsforyear = "https://www.sports-reference.com/cbb/seasons/2010-a
 base_url_oppteamstatsforyear = "https://www.sports-reference.com/cbb/seasons/2010-advanced-opponent-stats.html"
 base_url_kenpomforyear = "https://kenpom.com/index.php?y=2018"
 base_url_alltournamentgames = "https://www.sports-reference.com/cbb/play-index/tgl_finder.cgi?request=1&match=game&comp_schl_rk=eq&val_schl_rk=ANY&comp_opp_rk=eq&val_opp_rk=ANY&game_type=N&is_range=N&order_by=pts&offset={}"
+base_url_pollAP = "https://www.sports-reference.com/cbb/seasons/2010-polls.html"
+base_url_pollCoaches = "https://www.sports-reference.com/cbb/seasons/2018-polls-coaches.html"
 
-baseurl = base_url_oppteamstatsforyear
+baseurl = base_url_pollCoaches
 
 df = pd.DataFrame()
 
@@ -34,7 +36,7 @@ except Exception as e:
 
 	# offset=offset+100
 
-df.to_csv('Data/TeamStats/NCAAM_OppTeamStats_0910.csv',index=False)
+df.to_csv('Data/PollData/CoachesPoll_1718.csv',index=False)
 
 
 

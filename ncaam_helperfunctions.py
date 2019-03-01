@@ -311,7 +311,21 @@ convertTeamNames(oppTeamStats_1718,False)
 teams = pd.read_csv("Data/KaggleData/Teams.csv",header=0)
 
 masseyOrdinals = pd.read_csv("Data/KaggleData/MasseyOrdinals.csv",header=0)
-masseyOrdinals = masseyOrdinals[masseyOrdinals['SystemName']=='POM']
+# masseyOrdinals = masseyOrdinals[(masseyOrdinals['SystemName']=='POM')]
+
+preseasonMassey_0910 = masseyOrdinals[(masseyOrdinals['Season']==2010) & (masseyOrdinals['RankingDayNum']<15)]
+preseasonMassey_1011 = masseyOrdinals[(masseyOrdinals['Season']==2011) & (masseyOrdinals['RankingDayNum']<14)]
+preseasonMassey_1112 = masseyOrdinals[(masseyOrdinals['Season']==2012) & (masseyOrdinals['RankingDayNum']<14)]
+preseasonMassey_1213 = masseyOrdinals[(masseyOrdinals['Season']==2013) & (masseyOrdinals['RankingDayNum']<9)]
+preseasonMassey_1314 = masseyOrdinals[(masseyOrdinals['Season']==2014) & (masseyOrdinals['RankingDayNum']==9)]
+preseasonMassey_1415 = masseyOrdinals[(masseyOrdinals['Season']==2015) & (masseyOrdinals['RankingDayNum']==16)]
+preseasonMassey_1516 = masseyOrdinals[(masseyOrdinals['Season']==2016) & (masseyOrdinals['RankingDayNum']==16)]
+preseasonMassey_1617 = masseyOrdinals[(masseyOrdinals['Season']==2017) & (masseyOrdinals['RankingDayNum']==16)]
+preseasonMassey_1718 = masseyOrdinals[(masseyOrdinals['Season']==2018) & (masseyOrdinals['RankingDayNum']==16)]
+
+# preseasonMassey_1213.to_csv("helpermassey.csv")
+
+masseyOrdinals = masseyOrdinals[(masseyOrdinals['SystemName']=='POM')]
 masseyOrdinals = masseyOrdinals[masseyOrdinals['RankingDayNum']==133]
 
 masseyOrdinals_0910 = masseyOrdinals[masseyOrdinals['Season']==2010]
@@ -324,22 +338,24 @@ masseyOrdinals_1516 = masseyOrdinals[masseyOrdinals['Season']==2016]
 masseyOrdinals_1617 = masseyOrdinals[masseyOrdinals['Season']==2017]
 masseyOrdinals_1718 = masseyOrdinals[masseyOrdinals['Season']==2018]
 
+# print(masseyOrdinals_0910.loc[masseyOrdinals_0910['TeamID']==1434]['OrdinalRank'].mean())
+
 def createTeamStatistics(tournamentWinsAllYears):
     teamStatistics = {}
-    teamStatistics[2010] = teamStats(teamStats_0910,oppTeamStats_0910,kenpom_1011,masseyOrdinals_0910,tournamentWinsAllYears[2010],teams)
-    teamStatistics[2011] = teamStats(teamStats_1011,oppTeamStats_1011,kenpom_1011,masseyOrdinals_1011,tournamentWinsAllYears[2011],teams)
-    teamStatistics[2012] = teamStats(teamStats_1112,oppTeamStats_1112,kenpom_1112,masseyOrdinals_1112,tournamentWinsAllYears[2012],teams)
-    teamStatistics[2013] = teamStats(teamStats_1213,oppTeamStats_1213,kenpom_1213,masseyOrdinals_1213,tournamentWinsAllYears[2013],teams)
-    teamStatistics[2014] = teamStats(teamStats_1314,oppTeamStats_1314,kenpom_1314,masseyOrdinals_1314,tournamentWinsAllYears[2014],teams)
-    teamStatistics[2015] = teamStats(teamStats_1415,oppTeamStats_1415,kenpom_1415,masseyOrdinals_1415,tournamentWinsAllYears[2015],teams)
-    teamStatistics[2016] = teamStats(teamStats_1516,oppTeamStats_1516,kenpom_1516,masseyOrdinals_1516,tournamentWinsAllYears[2016],teams)
-    teamStatistics[2017] = teamStats(teamStats_1617,oppTeamStats_1617,kenpom_1617,masseyOrdinals_1617,tournamentWinsAllYears[2017],teams)
-    teamStatistics[2018] = teamStats(teamStats_1718,oppTeamStats_1718,kenpom_1718,masseyOrdinals_1718,tournamentWinsAllYears[2018],teams)
+    teamStatistics[2010] = teamStats(teamStats_0910,oppTeamStats_0910,kenpom_1011,masseyOrdinals_0910,preseasonMassey_0910,tournamentWinsAllYears[2010],teams)
+    teamStatistics[2011] = teamStats(teamStats_1011,oppTeamStats_1011,kenpom_1011,masseyOrdinals_1011,preseasonMassey_1011,tournamentWinsAllYears[2011],teams)
+    teamStatistics[2012] = teamStats(teamStats_1112,oppTeamStats_1112,kenpom_1112,masseyOrdinals_1112,preseasonMassey_1112,tournamentWinsAllYears[2012],teams)
+    teamStatistics[2013] = teamStats(teamStats_1213,oppTeamStats_1213,kenpom_1213,masseyOrdinals_1213,preseasonMassey_1213,tournamentWinsAllYears[2013],teams)
+    teamStatistics[2014] = teamStats(teamStats_1314,oppTeamStats_1314,kenpom_1314,masseyOrdinals_1314,preseasonMassey_1314,tournamentWinsAllYears[2014],teams)
+    teamStatistics[2015] = teamStats(teamStats_1415,oppTeamStats_1415,kenpom_1415,masseyOrdinals_1415,preseasonMassey_1415,tournamentWinsAllYears[2015],teams)
+    teamStatistics[2016] = teamStats(teamStats_1516,oppTeamStats_1516,kenpom_1516,masseyOrdinals_1516,preseasonMassey_1516,tournamentWinsAllYears[2016],teams)
+    teamStatistics[2017] = teamStats(teamStats_1617,oppTeamStats_1617,kenpom_1617,masseyOrdinals_1617,preseasonMassey_1617,tournamentWinsAllYears[2017],teams)
+    teamStatistics[2018] = teamStats(teamStats_1718,oppTeamStats_1718,kenpom_1718,masseyOrdinals_1718,preseasonMassey_1718,tournamentWinsAllYears[2018],teams)
     return teamStatistics
 
 #####TO DO######
 #helper function to generate needed teamStats for a given year
-def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
+def teamStats(statsFor,statsAgainst,kenpom,massey,preseasonMassey,tournamentWins,teams):
     teamStats = {}
     statsFor = statsFor.dropna()
     list_of_teams = statsFor['School']
@@ -351,8 +367,14 @@ def teamStats(statsFor,statsAgainst,kenpom,massey,tournamentWins,teams):
         kenpomRow = kenpom.loc[kenpom['Team'] == k]
         teamId = teams.loc[teams['TeamName']==k]['TeamID'].array[0]
         masseyRk = massey.loc[massey['TeamID']==teamId]['OrdinalRank'].array[0]
+        preseasonRk = preseasonMassey.loc[preseasonMassey['TeamID']==teamId]['OrdinalRank'].mean()
+        # print(masseyRk)
         statDict = {}
+        statDict['preseasonRk'] = preseasonRk
+        if (pd.isnull(preseasonRk)):
+            print("###errrororroorooror####")
         statDict['kenpomRk'] = masseyRk
+        statDict['diffRk'] = masseyRk - preseasonRk
         if k in tournamentWins.keys():
             tourneywins = tournamentWins[k]
             if tourneywins == 6:
@@ -654,6 +676,8 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
         wRoadWinPct = teamStatsByYear[year][winningTeam]['RoadWinPct']
         wNetEFG = teamStatsByYear[year][winningTeam]['netEFG%']
         wKenpomRk = teamStatsByYear[year][winningTeam]['kenpomRk']
+        wDiffRk = teamStatsByYear[year][winningTeam]['diffRk']
+        wPreseasonRk = teamStatsByYear[year][winningTeam]['preseasonRk']
         wNetTRB = teamStatsByYear[year][winningTeam]['netTRB%']
         wNetTOV = teamStatsByYear[year][winningTeam]['netTOV%']
         wNetBLK = teamStatsByYear[year][winningTeam]['netBLK%']
@@ -664,6 +688,8 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
         # lConfWinPct = teamStatsByYear[year][losingTeam]['ConfWinPct']
         lNetEFG = teamStatsByYear[year][losingTeam]['netEFG%']
         lKenpomRk = teamStatsByYear[year][losingTeam]['kenpomRk']
+        lDiffRk = teamStatsByYear[year][losingTeam]['diffRk']
+        lPreseasonRk = teamStatsByYear[year][losingTeam]['preseasonRk']
         lNetTRB = teamStatsByYear[year][losingTeam]['netTRB%']
         lNetTOV = teamStatsByYear[year][losingTeam]['netTOV%']
         lNetBLK = teamStatsByYear[year][losingTeam]['netBLK%']
@@ -671,12 +697,12 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
         # x.append(x_entry)
         # y.append(1)
         if i % 2 == 0:
-            t1=np.asarray([wNetEFG,wKenpomRk,wNetTRB,wNetTOV,wNetBLK])
-            t2=np.asarray([lNetEFG,lKenpomRk,lNetTRB,lNetTOV,lNetBLK]) 
+            t1=np.asarray([wNetEFG,wPreseasonRk,wNetTRB,wNetTOV,wNetBLK,wDiffRk])
+            t2=np.asarray([lNetEFG,lPreseasonRk,lNetTRB,lNetTOV,lNetBLK,lDiffRk]) 
             return np.subtract(t1,t2),1
         else:
-            t1=np.asarray([lNetEFG,lKenpomRk,lNetTRB,lNetTOV,lNetBLK])
-            t2=np.asarray([wNetEFG,wKenpomRk,wNetTRB,wNetTOV,wNetBLK])
+            t1=np.asarray([lNetEFG,lPreseasonRk,lNetTRB,lNetTOV,lNetBLK,lDiffRk])
+            t2=np.asarray([wNetEFG,wPreseasonRk,wNetTRB,wNetTOV,wNetBLK,wDiffRk])
             return np.subtract(t1,t2),0
     
     for index,row in trainingGames.iterrows():
