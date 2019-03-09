@@ -31,41 +31,44 @@ print(teamStatisticsMatrix.corr())
 
 def normalizeByYear(teamStatisticsYear):
     statsDicts = list(teamStatisticsYear.values())
-    meanNonConfWinPct = sum(item['NonConfWinPct'] for item in statsDicts) / len(statsDicts)
-    meanOverallWinPct = sum(item['OverallWinPct'] for item in statsDicts) / len(statsDicts)
-    meanRoadWinPct = sum(item['RoadWinPct'] for item in statsDicts) / len(statsDicts)
+    # meanNonConfWinPct = sum(item['NonConfWinPct'] for item in statsDicts) / len(statsDicts)
+    # meanOverallWinPct = sum(item['OverallWinPct'] for item in statsDicts) / len(statsDicts)
+    # meanRoadWinPct = sum(item['RoadWinPct'] for item in statsDicts) / len(statsDicts)
     meanNetEFG = sum(item['netEFG%'] for item in statsDicts) / len(statsDicts)
-    meanKenpom = sum(item['kenpomRk'] for item in statsDicts) / len(statsDicts)
+    # meanKenpom = sum(item['kenpomRk'] for item in statsDicts) / len(statsDicts)
     meanNetTRB = sum(item['netTRB%'] for item in statsDicts) / len(statsDicts)
     meanNetTOV = sum(item['netTOV%'] for item in statsDicts) / len(statsDicts)
     meanNetBLK = sum(item['netBLK%'] for item in statsDicts) / len(statsDicts)
     meanPreseason = sum(item['preseasonRk'] for item in statsDicts) / len(statsDicts)
     meanDiffRk = sum(item['diffRk'] for item in statsDicts) / len(statsDicts)
+    meanTS = sum(item['netTS%'] for item in statsDicts) / len(statsDicts)
 #     meanSOS = sum(item['SOS'] for item in statsDicts) / len(statsDicts)
 #     meanConfWinPct = sum(item['ConfWinPct'] for item in statsDicts) / len(statsDicts)
-    sdevNonConfWinPct = np.std([item['NonConfWinPct'] for item in statsDicts]) 
-    sdevOverallWinPct = np.std([item['OverallWinPct'] for item in statsDicts]) 
-    sdevRoadWinPct = np.std([item['RoadWinPct'] for item in statsDicts]) 
+    # sdevNonConfWinPct = np.std([item['NonConfWinPct'] for item in statsDicts]) 
+    # sdevOverallWinPct = np.std([item['OverallWinPct'] for item in statsDicts]) 
+    # sdevRoadWinPct = np.std([item['RoadWinPct'] for item in statsDicts]) 
     sdevNetEFG = np.std([item['netEFG%'] for item in statsDicts]) 
-    sdevKenpom = np.std([item['kenpomRk'] for item in statsDicts])
+    # sdevKenpom = np.std([item['kenpomRk'] for item in statsDicts])
     sdevPreseason = np.std([item['preseasonRk'] for item in statsDicts])
     sdevNetTRB = np.std([item['netTRB%'] for item in statsDicts])
     sdevNetTOV = np.std([item['netTOV%'] for item in statsDicts]) 
     sdevNetBLK = np.std([item['netBLK%'] for item in statsDicts]) 
     sdevDiffRk = np.std([item['diffRk'] for item in statsDicts])
+    sdevTS = np.std([item['netTS%'] for item in statsDicts])
 #     sdevSOS = np.std([item['SOS'] for item in statsDicts])
 #     sdevConfWinPct = np.std([item['ConfWinPct'] for item in statsDicts])
     for k in teamStatisticsYear.keys():
-        teamStatisticsYear[k]['NonConfWinPct'] = (teamStatisticsYear[k]['NonConfWinPct']-meanNonConfWinPct)/sdevNonConfWinPct
-        teamStatisticsYear[k]['OverallWinPct'] = (teamStatisticsYear[k]['OverallWinPct']-meanOverallWinPct)/sdevOverallWinPct
-        teamStatisticsYear[k]['RoadWinPct'] = (teamStatisticsYear[k]['RoadWinPct']-meanRoadWinPct)/sdevRoadWinPct
+        # teamStatisticsYear[k]['NonConfWinPct'] = (teamStatisticsYear[k]['NonConfWinPct']-meanNonConfWinPct)/sdevNonConfWinPct
+        # teamStatisticsYear[k]['OverallWinPct'] = (teamStatisticsYear[k]['OverallWinPct']-meanOverallWinPct)/sdevOverallWinPct
+        # teamStatisticsYear[k]['RoadWinPct'] = (teamStatisticsYear[k]['RoadWinPct']-meanRoadWinPct)/sdevRoadWinPct
         teamStatisticsYear[k]['netEFG%'] = (teamStatisticsYear[k]['netEFG%']-meanNetEFG)/sdevNetEFG
-        teamStatisticsYear[k]['kenpomRk'] = (teamStatisticsYear[k]['kenpomRk']-meanKenpom)/sdevKenpom
+        # teamStatisticsYear[k]['kenpomRk'] = (teamStatisticsYear[k]['kenpomRk']-meanKenpom)/sdevKenpom
         teamStatisticsYear[k]['preseasonRk'] = (teamStatisticsYear[k]['preseasonRk']-meanPreseason)/sdevPreseason
         teamStatisticsYear[k]['netTRB%'] = (teamStatisticsYear[k]['netTRB%']-meanNetTRB)/sdevNetTRB
         teamStatisticsYear[k]['netTOV%'] = (teamStatisticsYear[k]['netTOV%']-meanNetTOV)/sdevNetTOV
         teamStatisticsYear[k]['netBLK%'] = (teamStatisticsYear[k]['netBLK%']-meanNetBLK)/sdevNetBLK
         teamStatisticsYear[k]['diffRk'] = (teamStatisticsYear[k]['diffRk']-meanDiffRk)/sdevDiffRk
+        teamStatisticsYear[k]['netTS%'] = (teamStatisticsYear[k]['netTS%']-meanTS)/sdevTS
         # teamStatisticsYear[k]['SOS'] = (teamStatisticsYear[k]['SOS']-meanSOS)/sdevSOS
         # teamStatisticsYear[k]['ConfWinPct'] = (teamStatisticsYear[k]['ConfWinPct']-meanConfWinPct)/sdevConfWinPct
 
@@ -214,9 +217,9 @@ rf = RandomForestClassifier()
 # bootstrap = [True, False]
 
 param_tries={
-        # "n_estimators":[100,200,300,400,500],
+        "n_estimators":[100,200,300,400,500],
         # "n_estimators":[300,400,500],
-        "n_estimators":[300],
+        # "n_estimators":[300],
         # "min_samples_split":[2,3,4,5,6,7,8,9,10],
         'min_samples_split':[10,20,30,40,50,75,100,150,200],
         # "min_samples_leaf":[1,2,3,4,5],
