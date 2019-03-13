@@ -34,14 +34,17 @@ def normalizeByYear(teamStatisticsYear):
     # meanNonConfWinPct = sum(item['NonConfWinPct'] for item in statsDicts) / len(statsDicts)
     # meanOverallWinPct = sum(item['OverallWinPct'] for item in statsDicts) / len(statsDicts)
     # meanRoadWinPct = sum(item['RoadWinPct'] for item in statsDicts) / len(statsDicts)
-    meanNetEFG = sum(item['netEFG%'] for item in statsDicts) / len(statsDicts)
+    meanNetEFG = sum([item['netEFG%'] for item in statsDicts]) / len(statsDicts)
     # meanKenpom = sum(item['kenpomRk'] for item in statsDicts) / len(statsDicts)
-    meanNetTRB = sum(item['netTRB%'] for item in statsDicts) / len(statsDicts)
-    meanNetTOV = sum(item['netTOV%'] for item in statsDicts) / len(statsDicts)
-    meanNetBLK = sum(item['netBLK%'] for item in statsDicts) / len(statsDicts)
-    meanPreseason = sum(item['preseasonRk'] for item in statsDicts) / len(statsDicts)
-    meanDiffRk = sum(item['diffRk'] for item in statsDicts) / len(statsDicts)
-    meanTS = sum(item['netTS%'] for item in statsDicts) / len(statsDicts)
+    meanNetTRB = sum([item['netTRB%'] for item in statsDicts]) / len(statsDicts)
+    meanNetTOV = sum([item['netTOV%'] for item in statsDicts]) / len(statsDicts)
+    meanNetBLK = sum([item['netBLK%'] for item in statsDicts]) / len(statsDicts)
+    meanPreseason = sum([item['preseasonRk'] for item in statsDicts]) / len(statsDicts)
+    meanDiffRk = sum([item['diffRk'] for item in statsDicts]) / len(statsDicts)
+    meanTS = sum([item['netTS%'] for item in statsDicts]) / len(statsDicts)
+    meanNCAAWinPct = sum([item['winPctNCAA'] for item in statsDicts]) / len(statsDicts)
+    meanTop50WinPct = sum([item['winPctTop50'] for item in statsDicts]) / len(statsDicts)
+    meanTop100WinPct = sum([item['winPctTop100'] for item in statsDicts]) / len(statsDicts)
 #     meanSOS = sum(item['SOS'] for item in statsDicts) / len(statsDicts)
 #     meanConfWinPct = sum(item['ConfWinPct'] for item in statsDicts) / len(statsDicts)
     # sdevNonConfWinPct = np.std([item['NonConfWinPct'] for item in statsDicts]) 
@@ -55,6 +58,9 @@ def normalizeByYear(teamStatisticsYear):
     sdevNetBLK = np.std([item['netBLK%'] for item in statsDicts]) 
     sdevDiffRk = np.std([item['diffRk'] for item in statsDicts])
     sdevTS = np.std([item['netTS%'] for item in statsDicts])
+    sdevNCAAWinPct = np.std([item['winPctNCAA'] for item in statsDicts])
+    sdevTop50WinPct = np.std([item['winPctTop50'] for item in statsDicts])
+    sdevTop100WinPct = np.std([item['winPctTop100'] for item in statsDicts])
 #     sdevSOS = np.std([item['SOS'] for item in statsDicts])
 #     sdevConfWinPct = np.std([item['ConfWinPct'] for item in statsDicts])
     for k in teamStatisticsYear.keys():
@@ -69,6 +75,9 @@ def normalizeByYear(teamStatisticsYear):
         teamStatisticsYear[k]['netBLK%'] = (teamStatisticsYear[k]['netBLK%']-meanNetBLK)/sdevNetBLK
         teamStatisticsYear[k]['diffRk'] = (teamStatisticsYear[k]['diffRk']-meanDiffRk)/sdevDiffRk
         teamStatisticsYear[k]['netTS%'] = (teamStatisticsYear[k]['netTS%']-meanTS)/sdevTS
+        teamStatisticsYear[k]['winPctNCAA'] = (teamStatisticsYear[k]['winPctNCAA']-meanNCAAWinPct)/sdevNCAAWinPct
+        teamStatisticsYear[k]['winPctTop50'] = (teamStatisticsYear[k]['winPctTop50']-meanTop50WinPct)/sdevTop50WinPct
+        teamStatisticsYear[k]['winPctTop100'] = (teamStatisticsYear[k]['winPctTop100']-meanTop100WinPct)/sdevTop100WinPct
         # teamStatisticsYear[k]['SOS'] = (teamStatisticsYear[k]['SOS']-meanSOS)/sdevSOS
         # teamStatisticsYear[k]['ConfWinPct'] = (teamStatisticsYear[k]['ConfWinPct']-meanConfWinPct)/sdevConfWinPct
 
