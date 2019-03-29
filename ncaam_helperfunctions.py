@@ -19,7 +19,29 @@ na_values_list = ["School","Id","Date","Schl","Location","Opp","Result","MP","FG
 # tournamentGames_1011_1718 = tournamentGames_1011_1718.dropna()
 # print(tournamentGames_1011_1718)
 
+seeds_for_years = pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/KaggleData/DataFiles/NCAATourneySeeds.csv")
+seeds_for_2019 = pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/KaggleData/DataFiles/NCAATourneySeeds_2019.csv")
+# print(list(seeds_for_years['TeamID']))
+
+def getseedsforyears():
+    return seeds_for_years
+
+def createallpossiblematchups(year):
+    df = []
+    temp = seeds_for_2019
+    teams = list(temp['TeamID'])
+    for i in range(len(teams)):
+        selected = teams[i]
+        for j in range(i+1,len(teams)):
+            vs = teams[j]
+            df.append([selected,vs,year])
+    return pd.DataFrame(df,columns=['WTeamID','LTeamID','Season'])
+
+# print(createallpossiblematchups(2016))
+
+
 allGames = pd.read_csv("Data/KaggleData/DataFiles/RegularSeasonCompactResults.csv",header=0)
+allGames_1819 = pd.read_csv("Data/KaggleData/DataFiles/RegularSeasonCompactResults_2019.csv",header=0)
 
 allGames_0910 = allGames.loc[allGames['Season']==2010]
 allGames_1011 = allGames.loc[allGames['Season']==2011]
@@ -30,6 +52,7 @@ allGames_1415 = allGames.loc[allGames['Season']==2015]
 allGames_1516 = allGames.loc[allGames['Season']==2016]
 allGames_1617 = allGames.loc[allGames['Season']==2017]
 allGames_1718 = allGames.loc[allGames['Season']==2018]
+allGames_1819 = allGames_1819.loc[allGames_1819['Season']==2019]
 
 # allGames_1011 = pd.read_csv("Data/AllGames/NCAAM_AllGames_1011.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
 # allGames_1112 = pd.read_csv("Data/AllGames/NCAAM_AllGames_1112.csv", names=dtype_dict.keys(),skiprows=skiprows_list, dtype=dtype_dict,na_values=na_values_list)
@@ -105,6 +128,7 @@ teamStats_1415 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1415.csv",names=tea
 teamStats_1516 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1516.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 teamStats_1617 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1617.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 teamStats_1718 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1718.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
+teamStats_1819 = pd.read_csv("Data/TeamStats/NCAAM_TeamStats_1819.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 
 oppTeamStats_0910 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_0910.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 oppTeamStats_1011 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_1011.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
@@ -115,7 +139,7 @@ oppTeamStats_1415 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_1415.csv",nam
 oppTeamStats_1516 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_1516.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 oppTeamStats_1617 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_1617.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 oppTeamStats_1718 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_1718.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
-
+oppTeamStats_1819 = pd.read_csv("Data/TeamStats/NCAAM_OppTeamStats_1819.csv",names=teamStatsDTypeDict.keys(),skiprows=skiprows_list_teamStats,dtype=teamStatsDTypeDict,na_values=teamStats_na_values_list,usecols=teamStatsUseCols)
 
 #helper function to convert kenpom into correct format
 #kenpomToSRef = {"IncorrectKenPomTeamName":"CorrectSRefTeamName"}
@@ -309,6 +333,7 @@ convertTeamNames(teamStats_1415,False)
 convertTeamNames(teamStats_1516,False)
 convertTeamNames(teamStats_1617,False)
 convertTeamNames(teamStats_1718,False)
+convertTeamNames(teamStats_1819,False)
 convertTeamNames(oppTeamStats_0910,False)
 convertTeamNames(oppTeamStats_1011,False)
 convertTeamNames(oppTeamStats_1112,False)
@@ -318,6 +343,7 @@ convertTeamNames(oppTeamStats_1415,False)
 convertTeamNames(oppTeamStats_1516,False)
 convertTeamNames(oppTeamStats_1617,False)
 convertTeamNames(oppTeamStats_1718,False)
+convertTeamNames(oppTeamStats_1819,False)
 
 # print(kenpom_1314.loc[kenpom_1314['Team']=='Louisiana'])
 # print(kenpom_1011)
@@ -328,6 +354,8 @@ teams = pd.read_csv("Data/KaggleData/Teams.csv",header=0)
 
 masseyOrdinals = pd.read_csv("Data/KaggleData/MasseyOrdinals.csv",header=0)
 # masseyOrdinals = masseyOrdinals[(masseyOrdinals['SystemName']=='POM')]
+masseyOrdinals2019_133 = pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/KaggleData/MasseyOrdinals_2019_133.csv",header=0)
+masseyOrdinals2019 = pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/KaggleData/MasseyOrdinals_2019.csv",header=0)
 
 preseasonMassey_0910 = masseyOrdinals[(masseyOrdinals['Season']==2010) & (masseyOrdinals['RankingDayNum']<15)]
 preseasonMassey_1011 = masseyOrdinals[(masseyOrdinals['Season']==2011) & (masseyOrdinals['RankingDayNum']<14)]
@@ -338,6 +366,8 @@ preseasonMassey_1415 = masseyOrdinals[(masseyOrdinals['Season']==2015) & (massey
 preseasonMassey_1516 = masseyOrdinals[(masseyOrdinals['Season']==2016) & (masseyOrdinals['RankingDayNum']==16)]
 preseasonMassey_1617 = masseyOrdinals[(masseyOrdinals['Season']==2017) & (masseyOrdinals['RankingDayNum']==16)]
 preseasonMassey_1718 = masseyOrdinals[(masseyOrdinals['Season']==2018) & (masseyOrdinals['RankingDayNum']==16)]
+preseasonMassey_1819 = masseyOrdinals2019[(masseyOrdinals2019['RankingDayNum']<43)]
+# print(masseyOrdinals[masseyOrdinals['Season']==2019])
 
 # preseasonMassey_1213.to_csv("helpermassey.csv")
 
@@ -353,20 +383,35 @@ masseyOrdinals_1415 = masseyOrdinals[masseyOrdinals['Season']==2015]
 masseyOrdinals_1516 = masseyOrdinals[masseyOrdinals['Season']==2016]
 masseyOrdinals_1617 = masseyOrdinals[masseyOrdinals['Season']==2017]
 masseyOrdinals_1718 = masseyOrdinals[masseyOrdinals['Season']==2018]
+masseyOrdinals_1819 = masseyOrdinals2019_133
 
 # print(masseyOrdinals_0910.loc[masseyOrdinals_0910['TeamID']==1434]['OrdinalRank'].mean())
 
+tournamentTeams2019 = pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/KaggleData/DataFiles/NCAATourneySeeds_2019.csv",header=0)
+
 def createTeamStatistics(tournamentWinsAllYears):
+    print("creating team stats now")
     teamStatistics = {}
+    print('creating 2010 team stats')
     teamStatistics[2010] = teamStats(allGames_0910,teamStats_0910,oppTeamStats_0910,kenpom_1011,masseyOrdinals_0910,preseasonMassey_0910,tournamentWinsAllYears[2010],teams)
+    print("2011 team stats")
     teamStatistics[2011] = teamStats(allGames_1011,teamStats_1011,oppTeamStats_1011,kenpom_1011,masseyOrdinals_1011,preseasonMassey_1011,tournamentWinsAllYears[2011],teams)
+    print("2012")
     teamStatistics[2012] = teamStats(allGames_1112,teamStats_1112,oppTeamStats_1112,kenpom_1112,masseyOrdinals_1112,preseasonMassey_1112,tournamentWinsAllYears[2012],teams)
+    print('2013')
     teamStatistics[2013] = teamStats(allGames_1213,teamStats_1213,oppTeamStats_1213,kenpom_1213,masseyOrdinals_1213,preseasonMassey_1213,tournamentWinsAllYears[2013],teams)
+    print("2014")
     teamStatistics[2014] = teamStats(allGames_1314,teamStats_1314,oppTeamStats_1314,kenpom_1314,masseyOrdinals_1314,preseasonMassey_1314,tournamentWinsAllYears[2014],teams)
+    print("2015")
     teamStatistics[2015] = teamStats(allGames_1415,teamStats_1415,oppTeamStats_1415,kenpom_1415,masseyOrdinals_1415,preseasonMassey_1415,tournamentWinsAllYears[2015],teams)
+    print("2016")
     teamStatistics[2016] = teamStats(allGames_1516,teamStats_1516,oppTeamStats_1516,kenpom_1516,masseyOrdinals_1516,preseasonMassey_1516,tournamentWinsAllYears[2016],teams)
+    print("2017")
     teamStatistics[2017] = teamStats(allGames_1617,teamStats_1617,oppTeamStats_1617,kenpom_1617,masseyOrdinals_1617,preseasonMassey_1617,tournamentWinsAllYears[2017],teams)
+    print('2018')
     teamStatistics[2018] = teamStats(allGames_1718,teamStats_1718,oppTeamStats_1718,kenpom_1718,masseyOrdinals_1718,preseasonMassey_1718,tournamentWinsAllYears[2018],teams)
+    print("creating 2019 team stats now")
+    teamStatistics[2019] = teamStats(allGames_1819,teamStats_1819,oppTeamStats_1819,kenpom_1718,masseyOrdinals_1819,preseasonMassey_1819,tournamentWinsAllYears[2018],teams)
     return teamStatistics
 
 #####TO DO######
@@ -375,13 +420,16 @@ def teamStats(allGames,statsFor,statsAgainst,kenpom,massey,preseasonMassey,tourn
     teamStats = {}
     statsFor = statsFor.dropna()
     list_of_teams = statsFor['School']
+    print("create various win pcts")
     ncaaWinsInfo,masseyT50WinsInfo,masseyT100WinsInfo = createVariousWinPct(allGames,massey,tournamentWins)
     # print(list_of_teams)
+    print('creating team stat dicts')
     for k in list_of_teams:
         # print(k)
         statsForRow = statsFor.loc[statsFor['School'] == k]
         statsAgainstRow = statsAgainst.loc[statsAgainst['School'] == k]
         # kenpomRow = kenpom.loc[kenpom['Team'] == k]
+        print(k)
         teamId = teams.loc[teams['TeamName']==k]['TeamID'].array[0]
         masseyRk = massey.loc[massey['TeamID']==teamId]['OrdinalRank'].mean()
         preseasonRk = preseasonMassey.loc[preseasonMassey['TeamID']==teamId]['OrdinalRank'].mean()
@@ -393,15 +441,15 @@ def teamStats(allGames,statsFor,statsAgainst,kenpom,massey,preseasonMassey,tourn
         statDict['kenpomRk'] = masseyRk
         
         statDict['diffRk'] = adjRanking(masseyRk) - statDict['preseasonRk']
-        if k in tournamentWins.keys():
-            tourneywins = tournamentWins[k]
-            if tourneywins == 6:
-                tourneylosses = 0
-            else:
-                tourneylosses = 1
-        else:
-            tourneywins = 0
-            tourneylosses = 0
+        # if k in tournamentWins.keys():
+        #     tourneywins = tournamentWins[k]
+        #     if tourneywins == 6:
+        #         tourneylosses = 0
+        #     else:
+        #         tourneylosses = 1
+        # else:
+        #     tourneywins = 0
+        #     tourneylosses = 0
         # statDict['OverallWinPct'] = (statsForRow['TotalW'].array[0] - tourneywins)/(statsForRow['TotalL'].array[0]-tourneylosses + statsForRow['TotalW'].array[0] - tourneywins)
         # statDict['NonConfWinPct'] = (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins)/((statsForRow['TotalL'].array[0]-statsForRow['ConfL'].array[0]-tourneylosses) + (statsForRow['TotalW'].array[0]-statsForRow['ConfW'].array[0]-tourneywins))
         # if (statsForRow['ConfL'].array[0] + statsForRow['ConfW'].array[0] == 0):
@@ -439,12 +487,12 @@ def teamStats(allGames,statsFor,statsAgainst,kenpom,massey,preseasonMassey,tourn
         # statDict['netRtg'] = statDict['ORtg'] - statDict['DRtg']
         # statDict['pace'] = statsForRow['Pace'].array[0]
         # statDict['SOS'] = statsForRow['SOS'].array[0]
-        if (k not in ncaaWinsInfo.keys()):
-            # print(k)
-            statDict['winPctNCAA'] = 0
-        else:
-            # print(k)
-            statDict['winPctNCAA'] = ncaaWinsInfo[k][0] / (ncaaWinsInfo[k][1]+ncaaWinsInfo[k][0])
+        # if (k not in ncaaWinsInfo.keys()):
+        #     # print(k)
+        #     statDict['winPctNCAA'] = 0
+        # else:
+        #     # print(k)
+        #     statDict['winPctNCAA'] = ncaaWinsInfo[k][0] / (ncaaWinsInfo[k][1]+ncaaWinsInfo[k][0])
         if (k not in masseyT50WinsInfo.keys()):
             # print(k)
             statDict['winPctTop50'] = 0
@@ -522,17 +570,17 @@ def createVariousWinPct(allGames,kenpomRk,tournamentWins):
     team_kenpom_t50 = {}
     team_kenpom_t100 = {}
 
-    def helpNCAA(winningTeam,losingTeam,winnerFlag,loserFlag):
-        if (winnerFlag):
-            if (winningTeam in team_ncaa_games.keys()):
-                team_ncaa_games[winningTeam] = (team_ncaa_games[winningTeam][0]+1,team_ncaa_games[winningTeam][1])
-            else:
-                team_ncaa_games[winningTeam] = (1,0)
-        if (loserFlag):
-            if (losingTeam in team_ncaa_games.keys()):
-                team_ncaa_games[losingTeam] = (team_ncaa_games[losingTeam][0],team_ncaa_games[losingTeam][1]+1)
-            else:
-                team_ncaa_games[losingTeam] = (0,1)
+    # def helpNCAA(winningTeam,losingTeam,winnerFlag,loserFlag):
+    #     if (winnerFlag):
+    #         if (winningTeam in team_ncaa_games.keys()):
+    #             team_ncaa_games[winningTeam] = (team_ncaa_games[winningTeam][0]+1,team_ncaa_games[winningTeam][1])
+    #         else:
+    #             team_ncaa_games[winningTeam] = (1,0)
+    #     if (loserFlag):
+    #         if (losingTeam in team_ncaa_games.keys()):
+    #             team_ncaa_games[losingTeam] = (team_ncaa_games[losingTeam][0],team_ncaa_games[losingTeam][1]+1)
+    #         else:
+    #             team_ncaa_games[losingTeam] = (0,1)
     def help_t50(winningTeam,losingTeam,winnerFlag,loserFlag):
         if (winnerFlag):
             if (winningTeam in team_kenpom_t50.keys()):
@@ -557,6 +605,7 @@ def createVariousWinPct(allGames,kenpomRk,tournamentWins):
                 team_kenpom_t100[losingTeam] = (0,1)
             
     for index,row in allGames.iterrows():
+        print("looping through all games to make the various win pct")
         winningTeamId = row['WTeamID']
         losingTeamId = row['LTeamID']
         winningTeam = teams.loc[teams['TeamID']==winningTeamId]['TeamName'].array[0]
@@ -565,10 +614,10 @@ def createVariousWinPct(allGames,kenpomRk,tournamentWins):
         # print(losingTeam)
         winningTeamRk =  kenpomRk.loc[kenpomRk['TeamID']==winningTeamId]['OrdinalRank'].mean()        
         losingTeamRk = kenpomRk.loc[kenpomRk['TeamID']==losingTeamId]['OrdinalRank'].mean()
-        if (winningTeam in tournamentWins.keys()):
-            helpNCAA(winningTeam,losingTeam,False,True)
-        if (losingTeam in tournamentWins.keys()):
-            helpNCAA(winningTeam,losingTeam,True,False)
+        # if (winningTeam in tournamentWins.keys()):
+        #     helpNCAA(winningTeam,losingTeam,False,True)
+        # if (losingTeam in tournamentWins.keys()):
+        #     helpNCAA(winningTeam,losingTeam,True,False)
         if (winningTeamRk <= 100):
             help_t100(winningTeam,losingTeam,False,True)
         if (losingTeamRk <= 100):
@@ -767,12 +816,14 @@ def createTournamentDateList(seenGames):
 def tournamentWinsAllYears(year):
     return teamRecord.tournamentWinsAllYears(year)
 
-def createXYLogisticRegression(teamStatsByYear,trainingGames):
+def createXYLogisticRegression(teamStatsByYear,trainingGames,testingflag):
     #goal for x array [[wteamstats],[lteamstats]]
     #goal for y array = [1]
     y = []
     x = []
-    i = 1
+    df = []
+    i = 2
+    
     def helperCreateLogRegXY(winningTeam,losingTeam,year,i):
         x_entry = []
         # wNonConfWinPct = teamStatsByYear[year][winningTeam]['NonConfWinPct']
@@ -787,7 +838,7 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
         wNetTOV = teamStatsByYear[year][winningTeam]['netTOV%']
         wNetBLK = teamStatsByYear[year][winningTeam]['netBLK%']
         wNetTS = teamStatsByYear[year][winningTeam]['netTS%']
-        wNCAAWinPct = teamStatsByYear[year][winningTeam]['winPctNCAA']
+        # wNCAAWinPct = teamStatsByYear[year][winningTeam]['winPctNCAA']
         wT50WinPct = teamStatsByYear[year][winningTeam]['winPctTop50']
         wT100WinPct = teamStatsByYear[year][winningTeam]['winPctTop100']
         # x_entry.append([wNonConfWinPct,wNetEFG,wKenpomRk])
@@ -803,7 +854,7 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
         lNetTOV = teamStatsByYear[year][losingTeam]['netTOV%']
         lNetBLK = teamStatsByYear[year][losingTeam]['netBLK%']
         lNetTS = teamStatsByYear[year][losingTeam]['netTS%']
-        lNCAAWinPct = teamStatsByYear[year][losingTeam]['winPctNCAA']
+        # lNCAAWinPct = teamStatsByYear[year][losingTeam]['winPctNCAA']
         lT50WinPct = teamStatsByYear[year][losingTeam]['winPctTop50']
         lT100WinPct = teamStatsByYear[year][losingTeam]['winPctTop100']
         # x_entry.append([lNonConfWinPct,lNetEFG,lKenpomRk]) 
@@ -814,25 +865,29 @@ def createXYLogisticRegression(teamStatsByYear,trainingGames):
             t1=np.asarray([wNetTS,wPreseasonRk,wNetTRB,wNetTOV,wNetBLK,wDiffRk,wT100WinPct])
             
             t2=np.asarray([lNetTS,lPreseasonRk,lNetTRB,lNetTOV,lNetBLK,lDiffRk,lT100WinPct]) 
-            return np.subtract(t1,t2),1
+            return np.subtract(t1,t2),0,[winningTeam,losingTeam]
         else:
             
             t1=np.asarray([lNetTS,lPreseasonRk,lNetTRB,lNetTOV,lNetBLK,lDiffRk,lT100WinPct])
             
             t2=np.asarray([wNetTS,wPreseasonRk,wNetTRB,wNetTOV,wNetBLK,wDiffRk,wT100WinPct])
-            return np.subtract(t1,t2),0
-    
+            return np.subtract(t1,t2),1,[losingTeam,winningTeam]
+
     for index,row in trainingGames.iterrows():
         WTeamID = row['WTeamID']
         LTeamID = row['LTeamID']
         year = row['Season']
         winningTeam = teams.loc[teams['TeamID']==WTeamID]['TeamName'].array[0]
         losingTeam = teams.loc[teams['TeamID']==LTeamID]['TeamName'].array[0]
-        xtoapp,ytoapp = helperCreateLogRegXY(winningTeam,losingTeam,year,i)
+        xtoapp,ytoapp,dftoapp = helperCreateLogRegXY(winningTeam,losingTeam,year,i)
         x.append(xtoapp)
         y.append(ytoapp)
-        i=i+1
-    return x,y
+        df.append(dftoapp)
+        # trainingGames.at[index,'WTeamID'] = winningTeam
+        # trainingGames.at[index,'LTeamID'] = losingTeam
+        if (not testingflag):
+            i = i + 1
+    return x,y,pd.DataFrame(df,columns=['team1','team2'])
 
 def createCorrelationMatrix(teamStatistics):
     outerArray = []
@@ -842,3 +897,52 @@ def createCorrelationMatrix(teamStatistics):
     df = pd.DataFrame(outerArray,columns=teamStatistics[2010]['Kansas State'].keys())
     # print(df)
     return df
+
+teams = pd.read_csv("Data/KaggleData/Teams.csv",header=0)
+
+# listofallgames=pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/KaggleData/SampleSubmissionStage2.csv",header=0)
+
+# print(create2019(teamStatistics[2019],listofallgames))
+
+def create2019(teamStats2019,samplesubmission):
+    df = []
+    x = []
+    for index,row in samplesubmission.iterrows():
+        print(row)
+        text = row['ID']
+        year,team1id,team2id = text.split("_")
+        team1id=int(team1id)
+        team2id=int(team2id)
+        team1 = teams.loc[teams['TeamID']==team1id]['TeamName'].array[0]
+        team2 = teams.loc[teams['TeamID']==team2id]['TeamName'].array[0]
+        df.append([team1,team2])
+
+        wNetEFG = teamStats2019[team1]['netEFG%']
+        wKenpomRk = teamStats2019[team1]['kenpomRk']
+        wDiffRk = teamStats2019[team1]['diffRk']
+        wPreseasonRk = teamStats2019[team1]['preseasonRk']
+        wNetTRB = teamStats2019[team1]['netTRB%']
+        wNetTOV = teamStats2019[team1]['netTOV%']
+        wNetBLK = teamStats2019[team1]['netBLK%']
+        wNetTS = teamStats2019[team1]['netTS%']
+        # wNCAAWinPct = teamStats2019[team1]['winPctNCAA']
+        wT50WinPct = teamStats2019[team1]['winPctTop50']
+        wT100WinPct = teamStats2019[team1]['winPctTop100']
+
+        lNetEFG = teamStats2019[team2]['netEFG%']
+        lKenpomRk = teamStats2019[team2]['kenpomRk']
+        lDiffRk = teamStats2019[team2]['diffRk']
+        lPreseasonRk = teamStats2019[team2]['preseasonRk']
+        lNetTRB = teamStats2019[team2]['netTRB%']
+        lNetTOV = teamStats2019[team2]['netTOV%']
+        lNetBLK = teamStats2019[team2]['netBLK%']
+        lNetTS = teamStats2019[team2]['netTS%']
+        # lNCAAWinPct = teamStats2019[team2]['winPctNCAA']
+        lT50WinPct = teamStats2019[team2]['winPctTop50']
+        lT100WinPct = teamStats2019[team2]['winPctTop100']
+
+        t1=np.asarray([wNetTS,wPreseasonRk,wNetTRB,wNetTOV,wNetBLK,wDiffRk,wT100WinPct])
+        t2=np.asarray([lNetTS,lPreseasonRk,lNetTRB,lNetTOV,lNetBLK,lDiffRk,lT100WinPct]) 
+        
+        x.append(np.subtract(t1,t2))
+    return x,pd.DataFrame(df,columns=['team1','team2'])

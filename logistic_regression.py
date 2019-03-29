@@ -42,7 +42,7 @@ def normalizeByYear(teamStatisticsYear):
     meanPreseason = sum([item['preseasonRk'] for item in statsDicts]) / len(statsDicts)
     meanDiffRk = sum([item['diffRk'] for item in statsDicts]) / len(statsDicts)
     meanTS = sum([item['netTS%'] for item in statsDicts]) / len(statsDicts)
-    meanNCAAWinPct = sum([item['winPctNCAA'] for item in statsDicts]) / len(statsDicts)
+#     meanNCAAWinPct = sum([item['winPctNCAA'] for item in statsDicts]) / len(statsDicts)
     meanTop50WinPct = sum([item['winPctTop50'] for item in statsDicts]) / len(statsDicts)
     meanTop100WinPct = sum([item['winPctTop100'] for item in statsDicts]) / len(statsDicts)
 #     meanSOS = sum(item['SOS'] for item in statsDicts) / len(statsDicts)
@@ -58,7 +58,7 @@ def normalizeByYear(teamStatisticsYear):
     sdevNetBLK = np.std([item['netBLK%'] for item in statsDicts]) 
     sdevDiffRk = np.std([item['diffRk'] for item in statsDicts])
     sdevTS = np.std([item['netTS%'] for item in statsDicts])
-    sdevNCAAWinPct = np.std([item['winPctNCAA'] for item in statsDicts])
+#     sdevNCAAWinPct = np.std([item['winPctNCAA'] for item in statsDicts])
     sdevTop50WinPct = np.std([item['winPctTop50'] for item in statsDicts])
     sdevTop100WinPct = np.std([item['winPctTop100'] for item in statsDicts])
 #     sdevSOS = np.std([item['SOS'] for item in statsDicts])
@@ -75,7 +75,7 @@ def normalizeByYear(teamStatisticsYear):
         teamStatisticsYear[k]['netBLK%'] = (teamStatisticsYear[k]['netBLK%']-meanNetBLK)/sdevNetBLK
         teamStatisticsYear[k]['diffRk'] = (teamStatisticsYear[k]['diffRk']-meanDiffRk)/sdevDiffRk
         teamStatisticsYear[k]['netTS%'] = (teamStatisticsYear[k]['netTS%']-meanTS)/sdevTS
-        teamStatisticsYear[k]['winPctNCAA'] = (teamStatisticsYear[k]['winPctNCAA']-meanNCAAWinPct)/sdevNCAAWinPct
+        # teamStatisticsYear[k]['winPctNCAA'] = (teamStatisticsYear[k]['winPctNCAA']-meanNCAAWinPct)/sdevNCAAWinPct
         teamStatisticsYear[k]['winPctTop50'] = (teamStatisticsYear[k]['winPctTop50']-meanTop50WinPct)/sdevTop50WinPct
         teamStatisticsYear[k]['winPctTop100'] = (teamStatisticsYear[k]['winPctTop100']-meanTop100WinPct)/sdevTop100WinPct
         # teamStatisticsYear[k]['SOS'] = (teamStatisticsYear[k]['SOS']-meanSOS)/sdevSOS
@@ -91,6 +91,7 @@ normalizeByYear(teamStatistics[2015])
 normalizeByYear(teamStatistics[2016])
 normalizeByYear(teamStatistics[2017])
 normalizeByYear(teamStatistics[2018])
+normalizeByYear(teamStatistics[2019])
 # print(teamStatistics["1011"]["Notre Dame"])
 
 # def normalizeByConference(teamStatisticsYear,teams,conferences,year):
@@ -141,68 +142,11 @@ normalizeByYear(teamStatistics[2018])
 #         if (conferenceToStats[team_conference]['netTOV%'][1] != 0):    
 #             teamStatisticsYear[k]['netTOV%'] = (teamStatisticsYear[k]['netTOV%'] - conferenceToStats[team_conference]['netTOV%'][0]) / conferenceToStats[team_conference]['netTOV%'][1]
 
-# print("now we are normalizing by conference")
-# normalizeByConference(teamStatistics[2010],teams,conferences,2010)
-# normalizeByConference(teamStatistics[2011],teams,conferences,2011)
-# normalizeByConference(teamStatistics[2012],teams,conferences,2012)
-# normalizeByConference(teamStatistics[2013],teams,conferences,2013)
-# normalizeByConference(teamStatistics[2014],teams,conferences,2014)
-# normalizeByConference(teamStatistics[2015],teams,conferences,2015)
-# normalizeByConference(teamStatistics[2016],teams,conferences,2016)
-# normalizeByConference(teamStatistics[2017],teams,conferences,2017)
-# normalizeByConference(teamStatistics[2018],teams,conferences,2018)
-# # print(teamStatistics["1011"]["Notre Dame"])
-
 tournamentGamesData = helper.getTournamentGames()
-# print(len(tournamentGamesData))
-
-# testingGamesData = tournamentGamesData.loc[tournamentGamesData['Season']==2018]
-# tournamentGamesData = tournamentGamesData.loc[tournamentGamesData['Season']!=2018]
-# print(len(testingGamesData))
-# print(len(tournamentGamesData))
-
-
-# print("printing the testing games data")
-# print(testingGamesData)
-
-# i = 0
-# counter = []
-# for i in range(100):
-#     train, validation = train_test_split(tournamentGamesData, test_size=0.2)
-#     # print(len(train))
-#     # print("printing the training games data")
-#     # print(train)
-
-#     # print("printing the validation data")
-#     # print(validation)
-
-#     x,y = helper.createXYLogisticRegression(teamStatistics,train)
-#     # print(len(x))
-#     # print(len(y))
-
-#     x = np.asarray(x)
-#     y = np.asarray(y)
-#     # nsamples, nx, ny = x.shape
-#     # x = np.reshape(x,(nsamples,nx*ny))
-#     # print(x.shape)
-#     logRegModel = LogisticRegression(solver='lbfgs').fit(x,y)
-
-#     x,y = helper.createXYLogisticRegression(teamStatistics,validation)
-
-#     x = np.asarray(x)
-#     y = np.asarray(y)
-#     # nsamples, nx, ny = x.shape
-#     # x = np.reshape(x,(nsamples,nx*ny))
-
-#     counter.append(logRegModel.score(x,y))
-#     i+=1
-# score = sum(counter)/len(counter)
-# sdev = np.std(counter)
-# print("our validation on 100 runs ended up averaging an accuracy of "+str(score)+" with a standard deviation of "+str(sdev))
-
-x,y = helper.createXYLogisticRegression(teamStatistics,tournamentGamesData)
-
-print(len(x))
+# train, validation = train_test_split(tournamentGamesData, test_size=0.1)
+train = tournamentGamesData[tournamentGamesData['Season']!=2019]
+validation = tournamentGamesData[tournamentGamesData['Season']==2019]
+x,y,gamesInfo = helper.createXYLogisticRegression(teamStatistics,tournamentGamesData,False)
 
 
 ######### FOR LOGISTIC REGRESSION ###########
@@ -215,40 +159,71 @@ print(len(x))
 
 ######### FOR RANDOM FORESTS ##########
 
-rf = RandomForestClassifier()
+# rf = RandomForestClassifier()
 
-# n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
-# max_features = ['auto', 'sqrt']
-# max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
-# max_depth.append(None)
-# min_samples_split = [2, 5, 10]
-# min_samples_leaf = [1, 2, 4]
-# bootstrap = [True, False]
+# # n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
+# # max_features = ['auto', 'sqrt']
+# # max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
+# # max_depth.append(None)
+# # min_samples_split = [2, 5, 10]
+# # min_samples_leaf = [1, 2, 4]
+# # bootstrap = [True, False]
 
-param_tries={
-        "n_estimators":[100,200,300,400,500],
-        # "n_estimators":[300,400,500],
-        # "n_estimators":[300],
-        # "min_samples_split":[2,3,4,5,6,7,8,9,10],
-        'min_samples_split':[10,20,30,40,50,75,100,150,200],
-        # "min_samples_leaf":[1,2,3,4,5],
-        'min_samples_leaf':[10,15,20,30,50,75,100,150,200],
-        'max_features':[None],
-        'max_depth':[5,10,20,30,40,50,60,70],
-        'bootstrap':[True]}
+# param_tries={
+#         "n_estimators":[100,200,300,400,500],
+#         # "n_estimators":[300,400,500],
+#         # "n_estimators":[300],
+#         # "min_samples_split":[2,3,4,5,6,7,8,9,10],
+#         'min_samples_split':[10,20,30,40,50,75,100,150,200],
+#         # "min_samples_leaf":[1,2,3,4,5],
+#         'min_samples_leaf':[10,15,20,30,50,75,100,150,200],
+#         'max_features':[None],
+#         'max_depth':[5,10,20,30,40,50,60,70],
+#         'bootstrap':[True]}
 
-#helps narrow down to which hyperparameter options are best
+# #helps narrow down to which hyperparameter options are best
 
-randomForestModel = RandomizedSearchCV(estimator = rf, param_distributions = param_tries, n_iter = 100, cv = 10, verbose=2, random_state=42, n_jobs = -1).fit(x,y)
-print(randomForestModel.best_score_)
-print(randomForestModel.best_params_)
-
-
-
-# randomForestModel = GridSearchCV(cv=10,estimator=rf,param_grid=param_tries).fit(x,y)
-
+# randomForestModel = RandomizedSearchCV(estimator = rf, param_distributions = param_tries, n_iter = 100, cv = 10, verbose=2, random_state=42, n_jobs = -1).fit(x,y)
 # print(randomForestModel.best_score_)
 # print(randomForestModel.best_params_)
+
+
+###### THIS IS OUR ACTUAL TEST RUN #######
+
+
+x,y,gamesInfo = helper.createXYLogisticRegression(teamStatistics,train,False)
+
+model = RandomForestClassifier(n_estimators=200,min_samples_split=10,min_samples_leaf=10,max_features=None,max_depth=20,bootstrap=True).fit(x,y)
+
+validation = helper.createallpossiblematchups(2019)
+
+listofallgames=pd.read_csv("/Users/ronakmodi/Desktop/NCAAM_Project/Data/KaggleData/SampleSubmissionStage2.csv",header=0)
+
+# x,y,gamesInfo = helper.createXYLogisticRegression(teamStatistics,validation,True)
+x,gamesInfo = helper.create2019(teamStatistics[2019],listofallgames)
+
+y = model.predict_proba(x)
+
+print(y)
+
+model_results = pd.DataFrame(y)
+
+print(model_results)
+
+gamesInfo.reset_index(drop=True, inplace=True)
+model_results.reset_index(drop=True, inplace=True)
+listofallgames.reset_index(drop=True,inplace=True)
+
+forcsv = pd.concat([gamesInfo, model_results], axis=1)
+forkaggle = pd.concat([listofallgames, model_results],axis=1)
+
+print(forcsv)
+
+# forcsv.to_csv("resultsofmodel.csv")
+forkaggle.to_csv("pleasejesuschristsubmitproperlytokaggle.csv")
+
+
+
 
 
 
